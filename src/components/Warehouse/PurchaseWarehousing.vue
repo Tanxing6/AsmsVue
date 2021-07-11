@@ -150,6 +150,6 @@
 		} */
 	};
 </script>
-<style>
 
+<style>
 </style>

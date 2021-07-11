@@ -160,26 +160,9 @@
 				formLabelWidth: '120px',
 
 			}
-		},
-		/* methods: {
-			handleClick(tab, event) {
-				console.log(tab, event);
-			},
-			toggleSelection(rows) {
-				if (rows) {
-					rows.forEach(row => {
-						this.$refs.multipleTable.toggleRowSelection(row);
-					});
-				} else {
-					this.$refs.multipleTable.clearSelection();
-				}
-			},
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
-			}
-		} */
+		}
 	};
 </script>
-<style>
 
+<style>
 </style>
