@@ -47,7 +47,7 @@
 						<el-submenu index="3">
 						  <template #title><i class="el-icon-message"></i>仓库</template>
 						  <el-menu-item-group >
-							  <router-link to="/test1">
+							  <router-link to="/PurchaseWarehousing">
 						    <el-menu-item index="3-1">采购入库</el-menu-item>
 							</router-link>
 						  </el-menu-item-group>

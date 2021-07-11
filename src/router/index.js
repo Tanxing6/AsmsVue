@@ -4,6 +4,7 @@ import { createRouter,createWebHashHistory,createWebHistory} from "vue-router"
 
 import test1 from '../components/test1.vue'
 import test2 from '../components/test2.vue'
+import PurchaseWarehousing from '../components/Warehouse/PurchaseWarehousing.vue'
 
 // 定义路由的数组
 //对象，描述路径与组件的关系的
@@ -13,6 +14,8 @@ const routes=[
 		{path:'/test1',component:test1},
 	
 		{path:'/test2',component:test2},
+		
+		{path:'/PurchaseWarehousing',component:PurchaseWarehousing},
 
 ]
 const router=createRouter({
