@@ -12,9 +12,7 @@ const routes=[
 	//定义每个路径，对应的每个组件
 	// {path:'/main',component:Mainview}
 		{path:'/test1',component:test1},
-	
 		{path:'/test2',component:test2},
-		{path:'/hello',component:Organization}
 
 ]
 const router=createRouter({

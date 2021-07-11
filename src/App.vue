@@ -126,10 +126,8 @@
 									  <el-menu-item-group >
 									    <el-menu-item index="6-5">公司信息</el-menu-item>
 									  </el-menu-item-group>
-									  <el-menu-item-group >
-										  <router-link to="/hello">
+									  <el-menu-item-group>
 									    <el-menu-item index="6-6">组织架构</el-menu-item>
-										  </router-link>
 									  </el-menu-item-group>
 									  <el-menu-item-group >
 									    <el-menu-item index="6-7">用户设置</el-menu-item>
