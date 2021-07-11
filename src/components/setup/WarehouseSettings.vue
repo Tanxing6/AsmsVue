@@ -1,5 +1,5 @@
 <template>
-	<p>洗车开单</p>
+	<p>仓库设置</p>
 </template>
 
 <script>

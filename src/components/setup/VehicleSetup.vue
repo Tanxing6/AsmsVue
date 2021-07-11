@@ -1,5 +1,5 @@
 <template>
-	<p>预约维修</p>
+	<p>车辆设置</p>
 </template>
 
 <script>
