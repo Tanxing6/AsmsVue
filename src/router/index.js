@@ -1,7 +1,6 @@
 // router的函数，createRouter：创建路由管理器的。createWebHashHistory：创建的模式，以锚的形式。
 import { createRouter,createWebHashHistory,createWebHistory} from "vue-router"
 //引进vue文件
-
 // 开单
 import Carwashorder from '../components/Billing/Carwashorder.vue'
 import Maintenanceapp from '../components/Billing/Maintenanceapp.vue'
@@ -90,6 +89,7 @@ const routes=[
 	{path:'/VehicleSetup',component:VehicleSetup},
 	{path:'/WarehouseSettings',component:WarehouseSettings},
 	
+
 ]
 const router=createRouter({
 	history:createWebHistory(),
