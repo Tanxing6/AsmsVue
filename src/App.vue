@@ -69,7 +69,7 @@
 						  </el-menu-item-group>
 						  <el-menu-item-group >
 							  <router-link to="/PurchaseReturn">
-								  <el-menu-item index="3-3">销售出库</el-menu-item>
+								  <el-menu-item index="3-3">采购退货</el-menu-item>
 							  </router-link>
 						  </el-menu-item-group>
 						  <el-menu-item-group >
