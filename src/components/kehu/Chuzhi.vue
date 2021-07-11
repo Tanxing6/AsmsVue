@@ -1,5 +1,5 @@
 <template>
-	<p>洗车开单</p>
+	储值余额
 </template>
 
 <script>
