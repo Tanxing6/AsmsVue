@@ -4,7 +4,7 @@
 		  <el-scrollbar>
 		  <div>
 			  
-			  <img src="assets/logo2.png"/>
+			  <!-- <img src="assets/logo2.png"/> -->
 		  </div>
 		  <el-menu default-active="2"  
 		  	 class="el-menu-vertical-demo" :collapse="isCollapse"
