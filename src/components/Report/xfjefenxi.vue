@@ -129,8 +129,7 @@
 
 			}
 		},
-		methods: {
-			methods: {
+		methods: {/* 
 			    drawChart() {
 			      // 基于准备好的dom，初始化echarts实例
 			      let myChart = this.$echarts.init(document.getElementById("main"));
@@ -157,13 +156,15 @@
 			      };
 			      // 使用刚指定的配置项和数据显示图表。
 			      myChart.setOption(option);
-			    }
-			  },
+			    } */
+			  },/* 
 			  mounted() {
 			    this.drawChart();
-			  }
-		}
+			  } */
 	};
 </script>
 <style>
+	.el-input {
+	    width: 110px;
+	}
 </style>

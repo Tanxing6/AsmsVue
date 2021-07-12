@@ -1,4 +1,4 @@
-<template>
+ <template>
 	<el-tabs v-model="activeName" @tab-click="handleClick">
 			<div style="text-align: center;margin-bottom: 10px; font-weight: 600;">材料领用汇总</div>
 			<div>
@@ -8,10 +8,6 @@
 				 end-placeholder="结束日期" :shortcuts="shortcuts">
 				</el-date-picker>
 				&nbsp;
-				<el-select v-model="value" placeholder="领料人" id="select1">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-					</el-option>
-				</el-select>
 				<el-select v-model="value" placeholder="维修顾问" id="select1">
 					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 					</el-option>
@@ -26,36 +22,31 @@
 			</div>
 			<el-tabs type="border-card" style="margin-top: 30px;">
 					<div style="border:1px solid #EBEEF5 ;">
-						<el-table ref="multipleTable" :data="tableData" show-summary border tooltip-effect="dark" style="width: 100%;" @selection-change="handleSelectionChange">
-							<el-table-column width="1">
+						<el-table ref="multipleTable" :data="tableData1" height="450" show-summary border tooltip-effect="dark" style="width: 100%;" @selection-change="handleSelectionChange">
+						
+							<el-table-column prop="coName" label="物资名称" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="djh" label="物资名称" width="100">
+							<el-table-column prop="" label="物资编号" show-overflow-tooltip>
+								{{coCode}}
 							</el-table-column>
-							<el-table-column prop="kdrq" label="物资编号" width="100">
+							<el-table-column prop="name" label="领料人" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="ywy" label="领料人" show-overflow-tooltip>
+							<el-table-column prop="name" label="维修顾问" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="ckmc" label="维修顾问" show-overflow-tooltip>
+							<el-table-column prop="numberd" label="领料数量" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="djsm" label="领料数量" show-overflow-tooltip>
+							<el-table-column prop="paidMoney" label="领料金额" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="ysje" label="领料金额" show-overflow-tooltip>
+							<el-table-column prop="backNumber" label="退料数量" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="ssje" label="退料数量" show-overflow-tooltip>
+							<el-table-column prop="amountPrice" label="退料金额" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="lr" label="退料金额" show-overflow-tooltip>
+							<el-table-column prop="hjsl" label="合计数量" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="mll" label="合计数量" show-overflow-tooltip>
-							</el-table-column>
-							<el-table-column prop="czy" label="合计金额" show-overflow-tooltip>
+							<el-table-column prop="hjje" label="合计金额" show-overflow-tooltip>
 							</el-table-column>
 
 						</el-table>
-					</div>
-					<div style="float: right;">
-						<el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-						 :page-size="10" layout="total,sizes, prev, pager, next, jumper" :total="20">
-						</el-pagination>
 					</div>
 					
 					
@@ -68,49 +59,9 @@
 	export default {
 		data() {
 			return {
+				coCode:'',
 				activeName: 'second',
-				tableData: [{
-					date: '10001',
-					rq: '2021518',
-					ghs: '供货商A',
-					spbh: '12345',
-					spmc: '苹果12promax',
-					sslb: '电子产品',
-					ck: '总店仓库',
-					dw: '个',
-					sl: '20',
-					hsh: '19',
-					zje: '11880',
-					gg: '件',
-					ys: '石墨色',
-					jbr: '经办人a',
-					bz: '',
-					ywymc: '员工A',
-					xsje: '100000',
-					tkje: '58888',
-					khmc: '欧阳兄',
-					xshjje: '100009',
-				}, {
-					date: '10002',
-					rq: '2021518',
-					ghs: '供货商B',
-					spbh: '12346',
-					spmc: '苹果13promax',
-					sslb: '电子产品',
-					ck: '总店仓库',
-					dw: '个',
-					sl: '20',
-					hsh: '19',
-					zje: '13880',
-					gg: '件',
-					ys: '月光银',
-					jbr: '经办人b',
-					bz: '',
-					ywymc: '员工B',
-					xsje: '200000',
-					khmc: '文子酱',
-					yhsje: '10010',
-				}],
+				tableData1: [],
 				shortcuts: [{
 					text: '最近一周',
 					value: (() => {
@@ -154,7 +105,7 @@
 
 			}
 		},
-		/* methods: {
+		 methods: {
 			handleClick(tab, event) {
 				console.log(tab, event);
 			},
@@ -169,9 +120,30 @@
 			},
 			handleSelectionChange(val) {
 				this.multipleSelection = val;
-			}
-		} */
+			},
+			pages() {
+				const token = JSON.parse(sessionStorage.getItem("state"));
+				const _this = this;
+				_this.axios({
+						url: 'http://localhost:8081/asms/tCommodity/cllyhz',
+						method: 'get',
+					})
+					.then(function(response) {
+						console.log("tableData1:", response.data.data)
+						_this.tableData1= response.data.data;
+						_this.coCode = _this.tableData1[0].coCode
+					}).catch(function(error) {
+						console.log(error)
+					})
+			},
+		} ,
+		created() {
+			this.pages();
+		},
 	};
 </script>
 <style>
+	.el-input {
+	    width: 110px;
+	}
 </style>

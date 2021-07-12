@@ -9,15 +9,7 @@
 				 end-placeholder="结束日期" :shortcuts="shortcuts">
 				</el-date-picker>
 				&nbsp;
-				<el-select v-model="value" placeholder="单据类型" id="select1">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-					</el-option>
-				</el-select>
 				<el-select v-model="value" placeholder="维修类型" id="select1">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-					</el-option>
-				</el-select>
-				<el-select v-model="value" placeholder="收款状态" id="select1">
 					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 					</el-option>
 				</el-select>
@@ -42,64 +34,55 @@
 								<el-button slot="reference" icon="el-icon-more" circle style="margin-left: 100px;"></el-button>
 					</el-popover>
 					 <el-table 
-					 :data="tableData" 
+					 :data="tableData1" 
 					 show-summary
 					 stripe border
-					 style="width: 100%">
-						<el-table-column v-if="columnHeaders[0].isShow" prop="s" label="所属门店" show-overflow-tooltip>
+					 style="width: 100%"
+					 height="450">
+						<el-table-column v-if="columnHeaders[0].isShow" prop="sname" label="所属门店" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column v-if="columnHeaders[1].isShow" prop="cgsl" label="单据类型" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[1].isShow" prop="mainbilingno" label="单据编号" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column v-if="columnHeaders[2].isShow" prop="cgje" label="单据编号" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[2].isShow" prop="mainorder" label="单据日期" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column v-if="columnHeaders[3].isShow" prop="xssl" label="单据日期" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[3].isShow" prop="overmonytime" label="结算日期" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column v-if="columnHeaders[4].isShow" prop="xsje" label="结算日期" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[4].isShow" prop="cname" label="客户名称" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="xscb" label="收款日期" show-overflow-tooltip>
+						<el-table-column label="联系方式" show-overflow-tooltip>
+							{{cphone}}
 						</el-table-column>
-						<el-table-column prop="xslr" label="产品名称" show-overflow-tooltip>
+						<el-table-column prop="chepai" label="车牌号" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="mll" label="送修人" show-overflow-tooltip>
+						<el-table-column prop="name" label="维修顾问" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="rq" label="联系方式" show-overflow-tooltip>
+						<el-table-column prop="coName" label="维修材料" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="cgsl" label="车牌号" show-overflow-tooltip>
+						<el-table-column prop="servicename" label="维修类型" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="cgje" label="维修顾问" show-overflow-tooltip>
+						<el-table-column prop="settlementType" label="结账类型" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="xssl" label="明细分类" show-overflow-tooltip>
+						<el-table-column prop="mdTitle" label="数量" sortable show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="xsje" label="维修材料" show-overflow-tooltip>
+						<el-table-column prop="amout" label="单位" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="xscb" label="维修类型" show-overflow-tooltip>
+						<el-table-column prop="coRetailprice" label="成本" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="xslr" label="结账类型" show-overflow-tooltip>
+						<el-table-column prop="amountReceivable" label="单价"  show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="mll" label="数量" sortable show-overflow-tooltip>
+						<el-table-column prop="yfamount" label="结算金额"  show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="rq" label="单位" show-overflow-tooltip>
+						<el-table-column prop="orderamount" label="收款金额"  show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="cgsl" label="成本" show-overflow-tooltip>
-						</el-table-column>
-						<el-table-column prop="cgje" label="单价"  show-overflow-tooltip>
-						</el-table-column>
-						<el-table-column prop="xssl" label="结算金额"  show-overflow-tooltip>
-						</el-table-column>
-						<el-table-column prop="xsje" label="收款金额"  show-overflow-tooltip>
-						</el-table-column>
-						<el-table-column prop="xscb" label="应收金额"  show-overflow-tooltip>
-						</el-table-column>
-						<el-table-column prop="xslr" label="备注" show-overflow-tooltip>
+						<el-table-column prop="beizhu" label="备注" show-overflow-tooltip>
 						</el-table-column>			
 					</el-table>
 					
 					<div style="float: right; margin-top: 30px;">
 						<el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-						 :page-size="10" layout="total,sizes, prev, pager, next, jumper" :total="20">
+						 :page-size="10" layout="total,sizes, prev, pager, next, jumper" :total="2">
 						</el-pagination>
 					</div>
-				
 			</el-tabs>
 			</div>
 		
@@ -110,93 +93,21 @@
     name: 'ElTableTest',
 		data() {
 			return {
+				cphone:'',
 				activeNames: ['1'],
 				activeName: 'second',
-				tableData: [{
-					s:'m',
-					date: '10001',
-					rq: '2021518',
-					ghs: '供货商A',
-					spbh: '12345',
-					spmc: '苹果12promax',
-					sslb: '电子产品',
-					ck: '总店仓库',
-					dw: '个',
-					sl: '20',
-					hsh: '19',
-					zje: '11880',
-					gg: '件',
-					ys: '石墨色',
-					jbr: '经办人a',
-					bz: '',
-					ywymc: '员工A',
-					xsje: '100000',
-					tkje: '58888',
-					khmc: '欧阳兄',
-					xshjje: '100009',
-					splb: '水果',
-					xssl: '20',
-					zcb: '2999',
-				}, {
-					s:'m',
-					date: '10002',
-					rq: '2021518',
-					ghs: '供货商B',
-					spbh: '12346',
-					spmc: '苹果13promax',
-					sslb: '电子产品',
-					ck: '总店仓库',
-					dw: '个',
-					sl: '20',
-					hsh: '19',
-					zje: '13880',
-					gg: '件',
-					ys: '月光银',
-					jbr: '经办人b',
-					bz: '',
-					ywymc: '员工B',
-					xsje: '200000',
-					khmc: '文子酱',
-					yhsje: '10010',
-					splb: '电子',
-					xssl: '25',
-					zcb: '299999',
-				}],
+				tableData1: [],
 				 //表头信息
 				            columnHeaders: [ 
 				                {index: 0, title: "所属门店", isShow: true},
-				                {index: 1, title: "单据类型", isShow: true},
-				                {index: 2, title: "单据编号", isShow: true},
+				                {index: 1, title: "单据编号", isShow: true},
+				                {index: 2, title: "单据日期", isShow: true},
 								{index: 3, title: "结算日期", isShow: true},
-								{index: 4, title: "收款日期", isShow: true}
+								{index: 4, title: "客户名称", isShow: true}
 				            ],  
 				            //已选择的项
-				            columnSelecteds: ["所属门店","单据类型", "单据编号", "结算日期", "收款日期"],
-				shortcuts: [{
-					text: '最近一周',
-					value: (() => {
-						const end = new Date()
-						const start = new Date()
-						start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-						return [start, end]
-					})(),
-				}, {
-					text: '最近一个月',
-					value: (() => {
-						const end = new Date()
-						const start = new Date()
-						start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-						return [start, end]
-					})(),
-				}, {
-					text: '最近三个月',
-					value: (() => {
-						const end = new Date()
-						const start = new Date()
-						start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-						return [start, end]
-					})(),
-				}],
+				            columnSelecteds: ["所属门店","单据编号", "单据日期", "结算日期", "客户名称"],
+			
 				value1: '',
 				value2: '',
 				dialogTableVisible: false,
@@ -296,8 +207,26 @@
 			          } 
 			        });
 			        return sums;
-			      }
-		}
+			      },
+				  pages() {
+				  		const token = JSON.parse(sessionStorage.getItem("state"));
+				  		const _this = this;
+				  		_this.axios({
+				  				url: 'http://localhost:8081/asms/mainbilling/wxmxhz',
+				  				method: 'get',
+				  			})
+				  			.then(function(response) {
+				  				console.log("tableData1:", response.data.data)
+				  				_this.tableData1= response.data.data;
+								_this.cphone = _this.tableData1[0].cphone
+				  			}).catch(function(error) {
+				  				console.log(error)
+				  			})
+				  	},
+				  } ,
+				  created() {
+				  	this.pages();
+				  },
 	};
 </script>
 <style>
@@ -307,7 +236,9 @@
 	    margin-right: 13px;
 	}
 	#select1{
-		width: 105px;
 		margin-left: 10px;
+	}
+	.el-input {
+	    width: 110px;
 	}
 </style>
