@@ -50,7 +50,7 @@
 
 	<!-- 供货商数据列表 -->
 	<el-table ref="supplierform" :data="tableData" highlight-current-row @current-change="handleCurrentChange2" tooltip-effect="dark" style="width: 100%;"
-	 @selection-change="handleSelectionChange" border>
+	 @selection-change="handleSelectionChange" border type="index">
 		<el-table-column type="selection" width="55">
 		</el-table-column>
 		<el-table-column label="编号" width="120">
@@ -175,13 +175,25 @@
 							<el-form-item label="联系电话" :label-width="formLabelWidth">
 								<el-input v-model="supplierform.contactnumber" size="small"></el-input>
 							</el-form-item>
+							<el-form-item label="身份证号" :label-width="formLabelWidth">
+								<el-input v-model="supplierform.lxaddress" size="small"></el-input>
+							</el-form-item>
 							<el-form-item label="生日" :label-width="formLabelWidth">
 								<el-input v-model="supplierform.money" size="small"></el-input>
 							</el-form-item>
+							
+							
+						</el-col>
+						<el-col span="3">
 							<el-form-item label="所属分店" :label-width="formLabelWidth">
 								<el-select v-model="supplierform.companyid" placeholder="请选择" id="select1" size="small" @change="suoshufd">
-									
 									<el-option v-for="item in suptype" :key="item.branchid" :label="item.branchname" :value="item.branchid">
+									</el-option>
+								</el-select>
+							</el-form-item>
+							<el-form-item label="性别" :label-width="formLabelWidth">
+								<el-select v-model="supplierform.suptypeid" placeholder="请选择" id="select1" size="small">
+									<el-option v-for="item in gonhuos" :key="item.suptypeid" :label="item.supname" :value="item.suptypeid">
 									</el-option>
 								</el-select>
 							</el-form-item>
@@ -190,20 +202,6 @@
 									<el-option v-for="item in address" :key="item.addressid" :label="item.address" :value="item.addressid">
 									</el-option>
 								</el-select>
-							</el-form-item>
-						</el-col>
-						<el-col span="3">
-							<el-form-item label="所属地区" :label-width="formLabelWidth">
-								<el-select v-model="supplierform.addressid" placeholder="请选择" id="select1" size="small">
-									<el-option v-for="item in address" :key="item.addressid" :label="item.address" :value="item.addressid">
-									</el-option>
-								</el-select>
-							</el-form-item>
-							<el-form-item label="性别" :label-width="formLabelWidth">
-								<el-checkbox  @change="gbmorne" v-model="ismoren"></el-checkbox>
-							</el-form-item>
-							<el-form-item label="身份证号" :label-width="formLabelWidth">
-								<el-checkbox @change="gbjinyon" v-model="jinyon"></el-checkbox>
 							</el-form-item>
 							
 						</el-col>
@@ -216,6 +214,25 @@
 						<el-input type="textarea" v-model="supplierform.beizhu" size="small"></el-input>
 					</el-form-item>
 		</el-form>
+		<p>车辆信息</p>
+		<el-table ref="supplierform" :data="cheliang" highlight-current-row @current-change="handleCurrentChange3" tooltip-effect="dark" style="width: 100%;"
+		 @selection-change="handleSelectionChange" border>
+			<el-table-column type="selection" width="55">
+			</el-table-column>
+			<el-table-column label="编号" width="120">
+				<template #default="scope">{{ scope.row.supplierid }}</template>
+			</el-table-column>
+			<el-table-column prop="" label="车牌号"  width="120">
+			</el-table-column>
+			<el-table-column prop="" label="品牌" show-overflow-tooltip>
+			</el-table-column>
+			<el-table-column prop="" label="车系" show-overflow-tooltip>
+			</el-table-column>
+			<el-table-column prop="" label="车型" show-overflow-tooltip>
+			</el-table-column>
+			<el-table-column prop="" label="车身颜色" show-overflow-tooltip>
+			</el-table-column>
+		</el-table>
 		<template #footer>
 			<span class="dialog-footer">
 				<el-button @click="addshop = false">取 消</el-button>
