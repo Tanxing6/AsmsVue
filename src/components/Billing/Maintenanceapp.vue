@@ -151,6 +151,13 @@
 		data() {
 			return {
 				maintenanceappData:[],
+				maintenanceappData2:[],
+				maintenanceappData3:[],
+				maintenanceappData4:[],
+				maintenanceappData5:[],
+				maintenanceappData6:[],
+				maintenanceappData7:[],
+				maintenanceappData8:[],
 				dialogFormVisible3: false,
 				maintenanceappFrom: {
 					maintenanceappid:'',
@@ -190,6 +197,28 @@
 		created() {
 			const _this = this
 			console.log(this.pageInfo)
+			// 车辆外键显示
+			
+			// 门店外键显示
+			
+			// 材料外键显示
+			
+			// 项目外键显示
+			
+			// 员工外键显示
+			
+			// 客户外键显示
+			
+			// 维修类型
+			this.axios.get("http://localhost:8081/asms/service/selectOne")
+				.then(function(response) {
+					_this.maintenanceappData2 = response.data
+					// _this.pageInfo.total = response.data.total
+					console.log(response)
+				}).catch(function(error) {
+					console.log(error)
+				}),
+				// 显示全部
 			this.axios.get("http://localhost:8081/asms/selectByPrimaryKey")
 				.then(function(response) {
 					_this.maintenanceappData = response.data
