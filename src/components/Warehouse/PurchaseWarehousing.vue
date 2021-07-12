@@ -137,7 +137,7 @@
 			</span>
 			<span class="dialog-footer">
 				<el-button @click="add = false">取 消</el-button>
-				<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+				<el-button type="primary" @click="onSubmit(form)">确 定</el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -178,16 +178,7 @@
 				value2: '',
 				dialogTableVisible: false,
 				dialogFormVisible: false,
-				form: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
-				},
+				form: {},
 				options: [{
 					value: '选项1',
 					label: '黄金糕'
@@ -209,6 +200,18 @@
 			}
 		},
 		methods: {
+			onSubmit(form) {
+				var _this = this
+				this.axios.post("http://localhost:8081/wMaterialorder/insertpurchase",form).then(function(response) {
+						if(response.data.message === "success")
+						_this.$message.success("录入成功！")
+						_this.add = false
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
+				//_this.onsub();
+			},
 			handleDeleteDetails(val,row) {
 			      if (this.tableData.length == 0) {
 			        this.tableData.splice(row.id, 1);

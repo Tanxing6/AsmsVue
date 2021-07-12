@@ -11,10 +11,6 @@
 						<el-button icon="el-icon-search">查询</el-button>
 					</div>
 				</div>
-				<div class="rightLabBox">
-					<span>&nbsp;</span>
-					<a class="el-button fr el-button--primary el-button--mini" title="新增" @click="add=true">新增</a>
-				</div>
 			</div>
 			<div>
 				<el-table :data="tableData" border style="width: 100%;text-align: center;">
