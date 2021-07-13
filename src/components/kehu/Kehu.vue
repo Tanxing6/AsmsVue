@@ -38,7 +38,7 @@
 		<div style="float: right;line-height: 40px;">
 			<el-button icon="el-icon-circle-plus-outline" type="primary" @click="addshop=true"  size="small" style="margin-top: 4px;">新增</el-button>
 			
-			<el-button icon="el-icon-circle-close" @click="onTableSelect(this.tableData,index)"  type="primary"  size="small">分派</el-button>
+			<!-- <el-button icon="el-icon-circle-close" @click="onTableSelect(this.tableData,index)"  type="primary"  size="small">分派</el-button> -->
 		</div>
 		
 		
@@ -46,20 +46,20 @@
 
 	<!-- 供货商数据列表 -->
 	<el-table ref="supplierform" :data="tableData" highlight-current-row @current-change="handleCurrentChange2" tooltip-effect="dark" style="width: 100%;"
-	 @selection-change="handleSelectionChange" border type="index" >
+	 @selection-change="handleSelectionChange" border type="index" height="450">
 		 <el-table-column type="index" label="序号" width="55">
 		 </el-table-column>
 		<el-table-column type="selection" width="55">
 		</el-table-column>
 		
-		<el-table-column prop="" label="操作" width="220" >
+		<!-- <el-table-column prop="" label="操作" width="220" >
 			<template #default="scope">
 				<el-button type="text" size="mini">停用</el-button>
 				<el-button type="text" size="mini">查看消费记录</el-button>
 				<el-button type="text" size="mini">编辑</el-button>
 				<el-button type="text" size="mini">删除</el-button>
 			</template>
-		</el-table-column>
+		</el-table-column> -->
 		<el-table-column prop="sname" label="所属门店"  width="150">
 		</el-table-column>
 		<el-table-column prop="cname" label="客户名称"  width="80">
@@ -306,6 +306,7 @@
 										
 					})
 					_this.addshop = false;
+					_this.findkehu();
 				}).catch(function(error){
 					console.log(error)
 				})

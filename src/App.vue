@@ -43,11 +43,11 @@
 								<el-menu-item index="2-2">车辆资料</el-menu-item>
 							</router-link>
 						</el-menu-item-group>
-						<el-menu-item-group>
+						<!-- <el-menu-item-group>
 							<router-link to="/Jiage">
 								<el-menu-item index="2-3">会员价格</el-menu-item>
 							</router-link>
-						</el-menu-item-group>
+						</el-menu-item-group> -->
 						<el-menu-item-group>
 							<router-link to="/Huiyuan">
 								<el-menu-item index="2-4">会员管理</el-menu-item>
@@ -66,11 +66,11 @@
 								<el-menu-item index="3-1">采购入库</el-menu-item>
 							</router-link>
 						</el-menu-item-group>
-						<el-menu-item-group>
+						<!-- <el-menu-item-group>
 							<router-link to="/PurchaseOrder">
 								<el-menu-item index="3-2">采购订单</el-menu-item>
 							</router-link>
-						</el-menu-item-group>
+						</el-menu-item-group> -->
 						<el-menu-item-group>
 							<router-link to="/PurchaseReturn">
 								<el-menu-item index="3-3">销售出库</el-menu-item>
