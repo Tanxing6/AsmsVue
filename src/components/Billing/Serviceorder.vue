@@ -74,7 +74,7 @@
 								</el-select>
 							</p>
 						</div>
-						<div style="border: #2C3E50 solid 1px;width: 360px;">
+						<div style="border: #2C3E50 solid 1px;width: 360px;text-align: right;">
 							<p>
 								单据号：
 								<el-input v-model="MainbillingFrom.mainbillingno" style="width: 260px;" size="small">
@@ -140,7 +140,9 @@
 			</el-table-column>
 			<el-table-column prop="store.sname" label="所属门店" align="center">
 			</el-table-column>
-			<el-table-column prop="mainbillingno" label="单据编号" align="center">
+			<!-- <el-table-column prop="mainbillingno" label="单据编号" align="center">
+			</el-table-column> -->
+			<el-table-column prop="maintenanceapp.maintenanceappid" label="单据编号" align="center">
 			</el-table-column>
 			<el-table-column prop="mainorder" label="单据日期" align="center">
 			</el-table-column>

@@ -48,8 +48,8 @@
 			<el-table-column prop="remarks" label="备注">
 			</el-table-column>
 		</el-table>
-		<div class="block">
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+		<div style="float: right;margin-top: 30px;">
+			<el-pagination  @size-change="handleSizeChange" @current-change="handleCurrentChange"
 				:current-page="pageInfo.currentPage" :page-sizes="[2, 3, 6, 10]" :page-size="pageInfo.pagesize"
 				layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.total">
 			</el-pagination>

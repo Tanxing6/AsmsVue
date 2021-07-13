@@ -3,7 +3,7 @@
 		<el-aside width="200px">
 			<el-scrollbar>
 				<div>
-
+				<h1>车易云商</h1>
 					<!-- <img src="assets/logo2.png"/> -->
 				</div>
 				<el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" unique-opened>

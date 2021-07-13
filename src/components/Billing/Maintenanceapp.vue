@@ -75,10 +75,10 @@
 							</p>
 						</div>
 						<div style="border: #2C3E50 solid 1px;width: 360px;">
-							<p>
+							<!-- <p>
 								单据号：
 								<el-input v-model="maintenanceappFrom.appno" style="width: 260px;" size="small"></el-input>
-							</p>
+							</p> -->
 							<p>
 								总价：
 								<el-input v-model="maintenanceappFrom.yujiallmony" style="width: 260px;" size="small"></el-input>
