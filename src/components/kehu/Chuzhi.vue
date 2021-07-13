@@ -40,25 +40,24 @@
 	 tooltip-effect="dark" style="width: 100%;" @selection-change="handleSelectionChange" border type="index">
 		<el-table-column type="selection" width="55">
 		</el-table-column>
-		<el-table-column label="编号" width="120">
-			<template #default="scope">{{ scope.row.supplierid }}</template>
+		<el-table-column type="index" label="序号" width="55">
 		</el-table-column>
-		<el-table-column prop="" label="操作" show-overflow-tooltip>
+		<!-- <el-table-column prop="" label="操作" show-overflow-tooltip>
 			<template #default="scope">
 				<el-button v-model="ismoren0">明细</el-button>
 				<el-button v-model="ismoren1">换卡</el-button>
 				<el-button v-model="ismoren1">清零</el-button>
 			</template>
+		</el-table-column> -->
+		<el-table-column prop="sname" label="所属门店" width="150">
 		</el-table-column>
-		<el-table-column prop="" label="所属门店" width="120">
+		<el-table-column prop="cname" label="客户名称" show-overflow-tooltip>
 		</el-table-column>
-		<el-table-column prop="" label="客户名称" show-overflow-tooltip>
+		<el-table-column prop="cphone" label="联系电话" show-overflow-tooltip>
 		</el-table-column>
-		<el-table-column prop="" label="联系电话" show-overflow-tooltip>
+		<el-table-column prop="savingsno" label="储值卡号" show-overflow-tooltip>
 		</el-table-column>
-		<el-table-column prop="" label="储值卡号" show-overflow-tooltip>
-		</el-table-column>
-		<el-table-column prop="" label="剩余余额" show-overflow-tooltip>
+		<el-table-column prop="symony" label="剩余余额" show-overflow-tooltip>
 		</el-table-column>
 	</el-table>
 
@@ -68,167 +67,9 @@
 		</el-pagination>
 	</div>
 	<!-- 修改商品 -->
-	<el-dialog title="修改供货商" v-model="setshop">
-		<el-form :model="xgsupplierform" label-width="90px" style="width: 540px;">
-			<el-form-item label="名称" :label-width="formLabelWidth">
-				<el-input v-model="xgsupplierform.suppliername" size="small"></el-input>
-			</el-form-item>
-			<el-row span="2" :gutter="20">
-				<el-col span="2">
-					<el-form-item label="类型" :label-width="formLabelWidth">
-						<el-select v-model="xgsupplierform.suptypeid" placeholder="请选择" id="select1" size="small">
-							<el-option v-for="item in gonhuos" :key="item.suptypeid" :label="item.supname" :value="item.suptypeid">
-							</el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="联系人" :label-width="formLabelWidth">
-						<el-input v-model="xgsupplierform.contacts" size="small"></el-input>
-					</el-form-item>
-					<el-form-item label="联系电话" :label-width="formLabelWidth">
-						<el-input v-model="xgsupplierform.contactnumber" size="small"></el-input>
-					</el-form-item>
-					<el-form-item label="期初应付" :label-width="formLabelWidth">
-						<el-input v-model="xgsupplierform.money" size="small"></el-input>
-					</el-form-item>
-					<el-form-item label="所属分店" :label-width="formLabelWidth">
-						<el-select v-model="xgsupplierform.companyid" placeholder="请选择" id="select1" size="small" @change="suoshufd">
-
-							<el-option v-for="item in suptype" :key="item.branchid" :label="item.branchname" :value="item.branchid">
-							</el-option>
-						</el-select>
-					</el-form-item>
-				</el-col>
-				<el-col span="3">
-					<el-form-item label="所属地区" :label-width="formLabelWidth">
-						<el-select v-model="xgsupplierform.addressid" placeholder="请选择" id="select1" size="small">
-							<el-option v-for="item in address" :key="item.addressid" :label="item.address" :value="item.addressid">
-							</el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="默认供货商" :label-width="formLabelWidth">
-						<el-checkbox @change="gbmorne" v-model="ismoren"></el-checkbox>
-					</el-form-item>
-					<el-form-item label="禁用" :label-width="formLabelWidth">
-						<el-checkbox @change="gbjinyon" v-model="jinyon"></el-checkbox>
-					</el-form-item>
-				</el-col>
-			</el-row>
-			<el-form-item label="联系地址" :label-width="formLabelWidth">
-				<el-input v-model="xgsupplierform.lxaddress" size="small"></el-input>
-			</el-form-item>
-			<el-form-item label="备注" :label-width="formLabelWidth">
-				<el-input type="textarea" v-model="xgsupplierform.beizhu" size="small"></el-input>
-			</el-form-item>
-		</el-form>
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button @click="setshop = false">取 消</el-button>
-				<el-button type="primary" @click="xiugaisupplier">确 定</el-button>
-			</span>
-		</template>
-	</el-dialog>
+	
 	<!-- <-添加商品-> -->
-	<el-dialog title="客户储值单" v-model="addshop" width="72%" >
-		<el-form :model="supplierform" label-width="100px" style="width: 1040px;">
-			
-			<el-row span="4">
-				<el-col span="2">
-					<el-form-item label="客户姓名" :label-width="formLabelWidth">
-						<el-select v-model="xgsupplierform.addressid" placeholder="请选择" id="select1" size="small">
-							<el-option v-for="item in address" :key="item.addressid" :label="item.address" :value="item.addressid">
-							</el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="充值金额" :label-width="formLabelWidth">
-						<el-input v-model="xgsupplierform.lxaddress" size="small"></el-input>
-					</el-form-item>
-					
-				</el-col>
-				<el-col span="2">
-					<el-form-item label="联系电话" :label-width="formLabelWidth">
-						<el-input v-model="xgsupplierform.lxaddress" size="small" :disabled="true"></el-input>
-					</el-form-item>
-					<el-form-item label="赠送金额" :label-width="formLabelWidth">
-						<el-input v-model="xgsupplierform.lxaddress" size="small"></el-input>
-					</el-form-item>
-				
-				</el-col>
-				<el-col span="2">
-					<el-form-item label="所属部门" :label-width="formLabelWidth">
-						<el-select v-model="xgsupplierform.addressid" placeholder="请选择" id="select1" size="small">
-							<el-option v-for="item in address" :key="item.addressid" :label="item.address" :value="item.addressid">
-							</el-option>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="销售顾问" :label-width="formLabelWidth">
-						<el-select v-model="xgsupplierform.addressid" placeholder="请选择" id="select1" size="small">
-							<el-option v-for="item in address" :key="item.addressid" :label="item.address" :value="item.addressid">
-							</el-option>
-						</el-select>
-					</el-form-item>
-				
-				</el-col>
-				<el-col span="3">
-					<el-form-item label="储值卡号" :label-width="formLabelWidth">
-						<el-input v-model="xgsupplierform.lxaddress" size="small" :disabled="true"></el-input>
-					</el-form-item>
-					<el-form-item label="备注" :label-width="formLabelWidth">
-						<el-input v-model="xgsupplierform.lxaddress" size="small"></el-input>
-					</el-form-item>
-				</el-col>
-			</el-row>
-		</el-form>
-		<p>储值历史</p>
-		<el-table ref="supplierform" :data="tableData2" highlight-current-row @current-change="handleCurrentChange3"
-		 tooltip-effect="dark" style="width: 100%;" @selection-change="handleSelectionChange2" border type="index" height="250">
-			<el-table-column type="selection" width="55">
-			</el-table-column>
-			<el-table-column label="编号" width="120">
-				<template #default="scope">{{ scope.row.supplierid }}</template>
-			</el-table-column>
-			<el-table-column prop="" label="操作" show-overflow-tooltip>
-				<template #default="scope">
-					<el-button v-model="ismoren0">停用</el-button>
-					<el-button v-model="ismoren1">查看维修记录</el-button>
-					<el-button v-model="ismoren1">编辑</el-button>
-					<el-button v-model="ismoren1">删除</el-button>
-				</template>
-			</el-table-column>
-			<el-table-column prop="" label="所属门店" width="120">
-			</el-table-column>
-			<el-table-column prop="" label="单据编号" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="单据日期" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="单据状态" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="客户名称" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="联系电话" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="地址" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="储值卡号" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="充值类型" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="充值金额" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="赠送金额" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="销售顾问" show-overflow-tooltip>
-			</el-table-column>
-			<el-table-column prop="" label="备注" show-overflow-tooltip>
-			</el-table-column>
-		</el-table>
-
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button @click="addshop = false">取 消</el-button>
-				<el-button type="primary" @click="tjsupplier">确 定</el-button>
-			</span>
-		</template>
-	</el-dialog>
+	
 
 
 </template>
@@ -247,38 +88,7 @@
 				ismoren1: true,
 				multipleSelection: [],
 				address: [],
-				supplierform: {
-					sId: null,
-					supplierid: null,
-					companyid: null,
-					suppliername: '',
-					contacts: '',
-					contactnumber: '',
-					suptypeid: null,
-					addressid: null,
-					payablemoney: 0,
-					lxaddress: '',
-					money: null,
-					beizhu: '',
-					state: 0,
-					ismoren: 0
-				},
-				xgsupplierform: {
-					sId: null,
-					supplierid: null,
-					companyid: null,
-					suppliername: '',
-					contacts: '',
-					contactnumber: '',
-					suptypeid: null,
-					addressid: null,
-					payablemoney: 0,
-					lxaddress: '',
-					money: null,
-					beizhu: '',
-					state: 0,
-					ismoren: 0
-				},
+				
 				dialogFormVisible: false,
 				addshop: false,
 				setshop: false,
@@ -331,10 +141,21 @@
 		},
 
 		methods: {
+			findyue(){
+				var _this=this;
+				_this.axios.get("http://localhost:8081/asms/savings/findall")
+				.then(function(response){
+					console.log("余额资料：",response.data)
+					_this.tableData = response.data
+					
+				}).catch(function(error){
+					console.log(error)
+				})
+			},
 
 		},
 		created() {
-
+			this.findyue()
 		}
 
 	}

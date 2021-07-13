@@ -40,11 +40,6 @@
 						 </router-link>
 					  </el-menu-item-group>
 					  <el-menu-item-group >
-						  <router-link to="/Jiage">
-					    <el-menu-item index="2-3">会员价格</el-menu-item>
-						</router-link>
-					  </el-menu-item-group>
-					  <el-menu-item-group >
 						  <router-link to="/Huiyuan">
 					    <el-menu-item index="2-4">会员管理</el-menu-item>
 						</router-link>
