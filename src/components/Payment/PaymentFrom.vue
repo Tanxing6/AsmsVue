@@ -15,7 +15,7 @@
 			<el-button @click="findNameAndId">查询</el-button>
 		</div>
 
-		<el-table :data="tableData" height="250" border style="width: 100%">
+		<el-table :data="tableData"  border style="width: 100%">
 			<el-table-column type="index" label="序号">
 			</el-table-column>
 			<el-table-column type="selection">
@@ -26,10 +26,12 @@
 			</el-table-column>
 			<el-table-column prop="documenttype" label="来源单类型">
 			</el-table-column>
-			<!-- <el-table-column
-			  prop="address"
-			  label="来源单据">
-			</el-table-column> -->
+			<el-table-column prop="documentstatus" label="单据状态">
+				<template v-slot="scope">
+					<p v-if="scope.row.documentstatus==0">已登录</p>
+					<p v-if="scope.row.documentstatus==1">已结算</p>
+				</template>
+			</el-table-column>
 			<el-table-column prop="relationship" label="往来关系">
 			</el-table-column>
 

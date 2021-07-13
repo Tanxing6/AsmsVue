@@ -44,41 +44,41 @@
 			     >
 			</el-table-column>
 			<el-table-column
-			  prop="name"
+			  prop="store.sname"
 			  label="所属门店"
 			  width="180">
 			</el-table-column>
 		    <el-table-column
-		      prop="name"
+		      prop="documentnumber"
 		      label="退款单号"
 		      width="180">
 		    </el-table-column>
 			<el-table-column
-			  prop="address"
+			  prop="documentdate"
 			  label="单据日期">
 			</el-table-column>
 		    <el-table-column
-		      prop="address"
+		      prop="documentstatus"
 		      label="单据状态">
 		    </el-table-column>
 			<el-table-column
-			  prop="address"
+			  prop="customer.cname"
 			  label="客户名称">
 			</el-table-column>
 			<el-table-column
-			  prop="address"
+			  prop="customer.cphone"
 			  label="联系电话">
 			</el-table-column>
 			<el-table-column
-			  prop="address"
+			  prop="YFAmount"
 			  label="应付金额">
 			</el-table-column>
 			<el-table-column
-			  prop="address"
+			  prop="BCAmount"
 			  label="本次付款">
 			</el-table-column>
 			<el-table-column
-			  prop="address"
+			  prop="Sum"
 			  label="合计余额">
 			</el-table-column>
 			<el-table-column
@@ -86,11 +86,11 @@
 			  label="收款单号">
 			</el-table-column>
 			<el-table-column
-			  prop="address"
+			  prop="Operator"
 			  label="经手人">
 			</el-table-column>
 			<el-table-column
-			  prop="address"
+			  prop="remarks"
 			  label="备注">
 			</el-table-column>
 		  </el-table>
