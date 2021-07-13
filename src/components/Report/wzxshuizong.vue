@@ -11,33 +11,20 @@
 			</div>
 			<el-tabs type="border-card" style="margin-top: 30px;">
 					<div style="border:1px solid #EBEEF5 ;">
-						<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" show-summary border style="width: 100%;" @selection-change="handleSelectionChange">
-							<el-table-column prop="djh" label="单据号" ></el-table-column>
-							<el-table-column prop="kdrq" label="开单日期" ></el-table-column>
-							<el-table-column prop="djlx" label="单据类型" show-overflow-tooltip></el-table-column>
-							<el-table-column prop="khhy" label="客户/会员" show-overflow-tooltip>
+						<el-table ref="multipleTable" :data="tableData1" tooltip-effect="dark" show-summary border style="width: 100%;" @selection-change="handleSelectionChange">
+							<el-table-column prop="saleCode" label="销售单编号" ></el-table-column>
+							<el-table-column prop="saleTime" label="开单日期" ></el-table-column>
+							<el-table-column prop="sname" label="所属门店" show-overflow-tooltip></el-table-column>
+							<el-table-column prop="cname" label="客户名称" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="bh" label="编号" show-overflow-tooltip>
+							<el-table-column prop="" label="联系电话" show-overflow-tooltip>
+								{{cphone}}
 							</el-table-column>
-							<el-table-column prop="spmc" label="商品名称" show-overflow-tooltip>
+							<el-table-column prop="saleNumber" label="销售数量" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="dw" label="单位" show-overflow-tooltip>
+							<el-table-column prop="amout" label="成本金额" show-overflow-tooltip>
 							</el-table-column>
-							<el-table-column prop="xsdj" label="销售单价" show-overflow-tooltip>
-							</el-table-column>
-							<el-table-column prop="zje" label="总金额" show-overflow-tooltip>
-							</el-table-column>
-							<el-table-column prop="lr" label="利润" show-overflow-tooltip>
-							</el-table-column>
-							<el-table-column prop="mll" label="毛利率%" show-overflow-tooltip>
-							</el-table-column>
-							<el-table-column prop="zcb" label="总成本" show-overflow-tooltip>
-							</el-table-column>
-							<el-table-column prop="jbr" label="经办人" show-overflow-tooltip>
-							</el-table-column>
-							<el-table-column prop="ckmc" label="仓库名称" show-overflow-tooltip>
-							</el-table-column>
-							<el-table-column prop="bz" label="备注" show-overflow-tooltip>
+							<el-table-column prop="coRetailprice" label="销售金额" show-overflow-tooltip>
 							</el-table-column>
 
 						</el-table>
@@ -57,55 +44,9 @@
 	export default {
 		data() {
 			return {
+				cphone:'',
 				activeName: 'second',
-				tableData: [{
-					date: '10001',
-					rq: '2021518',
-					ghs: '供货商A',
-					spbh: '12345',
-					spmc: '苹果12promax',
-					sslb: '电子产品',
-					ck: '总店仓库',
-					dw: '个',
-					sl: '20',
-					hsh: '19',
-					zje: '11880',
-					gg: '件',
-					ys: '石墨色',
-					jbr: '经办人a',
-					bz: '',
-					ywymc: '员工A',
-					xsje: '100000',
-					tkje: '58888',
-					khmc: '欧阳兄',
-					xshjje: '100009',
-					splb:'水果',
-					xssl:'20',
-					zcb:'2999',
-				}, {
-					date: '10002',
-					rq: '2021518',
-					ghs: '供货商B',
-					spbh: '12346',
-					spmc: '苹果13promax',
-					sslb: '电子产品',
-					ck: '总店仓库',
-					dw: '个',
-					sl: '20',
-					hsh: '19',
-					zje: '13880',
-					gg: '件',
-					ys: '月光银',
-					jbr: '经办人b',
-					bz: '',
-					ywymc: '员工B',
-					xsje: '200000',
-					khmc: '文子酱',
-					yhsje: '10010',
-					splb:'电子',
-					xssl:'25',
-					zcb:'299999',
-				}],
+				tableData1: [],
 				
 				value1: '',
 				value2: '',
@@ -140,9 +81,30 @@
 			},
 			handleSelectionChange(val) {
 				this.multipleSelection = val;
-			}
-		}
+			},
+			pages() {
+					const token = JSON.parse(sessionStorage.getItem("state"));
+					const _this = this;
+					_this.axios({
+							url: 'http://localhost:8081/asms/mainbilling/wzxshz',
+							method: 'get',
+						})
+						.then(function(response) {
+							console.log("tableData1:", response.data.data)
+							_this.tableData1= response.data.data;
+											_this.cphone = _this.tableData1[0].cphone
+						}).catch(function(error) {
+							console.log(error)
+						})
+				},
+			} ,
+			created() {
+				this.pages();
+			},
 	};
 </script>
 <style>
+	.el-input {
+	    width: 110px;
+	}
 </style>

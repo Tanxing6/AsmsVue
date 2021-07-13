@@ -76,7 +76,7 @@
 			
 		</el-tab-pane>
 		<el-tab-pane label="营业支出分类汇总">
-			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="float: right;width: 29%;" @selection-change="handleSelectionChange">
+			<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="float: right;width: 30%;" @selection-change="handleSelectionChange">
 				
 				<el-table-column prop="lr" label="营业支出分类汇总" show-overflow-tooltip >
 				</el-table-column>
@@ -119,31 +119,6 @@
 		data() {
 			return {
 				tableData: [],
-				shortcuts: [{
-					text: '最近一周',
-					value: (() => {
-						const end = new Date()
-						const start = new Date()
-						start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-						return [start, end]
-					})(),
-				}, {
-					text: '最近一个月',
-					value: (() => {
-						const end = new Date()
-						const start = new Date()
-						start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-						return [start, end]
-					})(),
-				}, {
-					text: '最近三个月',
-					value: (() => {
-						const end = new Date()
-						const start = new Date()
-						start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-						return [start, end]
-					})(),
-				}],
 				input: '',
 				value1: '',
 				value2: '',
@@ -173,133 +148,14 @@
 			
 		},
 		methods: {
-			toggleSelection(rows) {
-				if (rows) {
-					rows.forEach(row => {
-						this.$refs.multipleTable.toggleRowSelection(row);
-					});
-				} else {
-					this.$refs.multipleTable.clearSelection();
-				}
-			},
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
-			},
-			flcx() {
-				const _this = this
-				var pd = {
-					input: this.input,
-					selType:this.selType,
-					currentPage: this.pageinfo.currentPage,
-					pageSize: this.pageinfo.pageSize
-				}
-				_this.axios({
-						url: "http://localhost:8099/vuebolg/documentShop/selectByname",
-						method: "get",
-						params: pd,
-						processData: false
-					})
-					.then(function(response) {
-						console.log("currentPage::", response.data.data)
-						_this.tableData = response.data.data.list;
-						_this.pageinfo.total = response.data.data.total
-					})
-					.catch(function(error) {
-						console.log(error);
-					});
-			},
-			
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
-			},
-			handleSizeChange(size) {
-				const _this = this;
-				this.pageinfo.pageSize = size
-				this.axios.get('http://localhost:8099/vuebolg/documentShop/selectPurch', {
-					params: _this.pageinfo
-				}).then(function(response) {
-					console.log(response.data)
-					_this.tableData = response.data.data.list;
-					_this.pageinfo.total = response.data.data.total
-					console.log(_this.pageinfo.total)
-					console.log("ttt:", _this.tableData)
-				}).catch(function(error) {
-					console.log(error)
-				})
-			},
-			handleCurrentChange(page) {
-				const _this = this;
-				// var fd={
-				// 				  currentPage:_this.pageinfo.currentPage,
-				// 				  pageSize:_this.pageinfo.pageSize
-				// };
-				this.pageinfo.currentPage = page
-				this.axios.get('http://localhost:8099/vuebolg/documentShop/selectPurch', {
-					params: _this.pageinfo
-				}).then(function(response) {
-					console.log(response.data)
-					_this.tableData = response.data.data.list;
-			
-					_this.pageinfo.total = response.data.data.total
-					console.log(_this.pageinfo.total)
-					for (var i = 0; i < _this.tableData.length; i++) {
-						_this.tableData[i].zcb = (_this.tableData[i].invenTory * _this.tableData[i].purchasePrice)
-					}
-			
-					console.log("ttt:", _this.tableData)
-				}).catch(function(error) {
-					console.log(error)
-				})
-				},
-			//分页查询所有的商品 
-			pages() {
-				const _this = this;
-				var fd = {
-					currentPage: _this.pageinfo.currentPage,
-					pageSize: _this.pageinfo.pageSize
-				};
-				_this.axios({
-						url: 'http://localhost:8099/vuebolg/documentShop/selectPurch',
-						method: 'get',
-						params: fd,
-					})
-					.then(function(response) {
-						console.log("currentPage::", response.data.data)
-						_this.tableData = response.data.data.list;
-						_this.pageinfo.total = response.data.data.total
-						console.log(_this.pageinfo.total)
-						console.log("ttt:", _this.tableData)
-					}).catch(function(error) {
-						console.log(error)
-					})
-			},
-			pages1() {
-				const _this = this;
-				_this.axios({
-						url: 'http://localhost:8099/vuebolg/documentShop/selectfltj',
-						method: 'get',
-					})
-					.then(function(response) {
-						console.log("currentPage::", response.data.data)
-						_this.tableData2 = response.data.data;
-					}).catch(function(error) {
-						console.log(error)
-					})
-			},
-			
-		},
-		created() {
-			this.pages();
-			this.pages1();
-		},
-		
-		
-		
-
+			}
 	}
 </script>
 
 <style>
+	.el-input {
+	    width: 110px;
+	}
 	#aaa {
 		width: 150px;
 		margin-left: 30px;
