@@ -1,77 +1,70 @@
 <template>
 	<div style="text-align: left;">
-		<el-input v-model="pageInfo.c_name" style="width: 300px;" size="small" placeholder="请输入内容"></el-input>
+		<el-input v-model="pageInfo.name" style="width: 300px;" size="small" placeholder="请输入内容"></el-input>
 		<el-button icon="el-icon-search" size="small" @click="selectConter()"></el-button>
 		<el-button type="primary" size="small" icon="el-icon-circle-plus-outline" @click="dialogFormVisible3 = true">新增
 		</el-button>
 		<!-- 新增弹窗 -->
 		<el-dialog title="预约开单" v-model="dialogFormVisible3" custom-class="dialogClass">
-			<el-form :model="maintenanceappFrom" ref="maintenanceappFrom">
+			<el-form :model="CarwashFrom" ref="CarwashFrom">
 				<el-form-item>
 					<div style="display: flex;">
 						<div style="border: #2C3E50 solid 1px;width: 360px;">
 							<p>
 								选择客户：
-								<el-select v-model="maintenanceappFrom.kehuid" slot="prepend" placeholder="请选择" size="small" width="200px" filterable>
-									<el-option label="木比白" value="1"></el-option>
-									<el-option label="订单号" value="2"></el-option>
-									<el-option label="用户电话" value="3"></el-option>
+								<el-select v-model="CarwashFrom.kehuid" value-key="cid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in customerData3" :key="item.cid" :label="item.cname"
+										:value="item.cid">
+									</el-option>
 								</el-select>
 							</p>
 							<p>
-								选择类型：
-								<el-input v-model="maintenanceappFrom.serviceid" style="width: 260px;" size="small"></el-input>
-							</p>
-							<p>
-								车辆id：
-								<el-input v-model="maintenanceappFrom.carid" style="width: 260px;" size="small"></el-input>
-							</p>
-							<p>
 								顾问：
-								<el-input v-model="maintenanceappFrom.empid" style="width: 260px;" size="small"></el-input>
-							</p>
-							<p>
-								项目id：
-								<el-input v-model="maintenanceappFrom.xiangmuid" style="width: 260px;" size="small"></el-input>
-							</p>
-							<p>
-								材料id：
-								<el-input v-model="maintenanceappFrom.cailiaoid" style="width: 260px;" size="small"></el-input>
+								<el-select v-model="CarwashFrom.eid" value-key="eid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in empData4" :key="item.eid" :label="item.name"
+										:value="item.eid">
+									</el-option>
+								</el-select>
 							</p>
 							<p>
 								门店：
-								<el-input v-model="maintenanceappFrom.mendianid" style="width: 260px;" size="small"></el-input>
+								<el-select v-model="CarwashFrom.sid" value-key="sid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in storeData7" :key="item.sid" :label="item.sname"
+										:value="item.sid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								备注：
+								<el-input v-model="CarwashFrom.remarks" style="width: 260px;" size="small"></el-input>
 							</p>
 						</div>
 						<div style="border: #2C3E50 solid 1px;width: 360px;">
 							<p>
-								单据号：
-								<el-input v-model="maintenanceappFrom.appno" style="width: 260px;" size="small"></el-input>
+								车牌号：
+								<el-select v-model="CarwashFrom.carmagid" value-key="carid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in carmanagementData8" :key="item.carmagid" :label="item.chepai"
+										:value="item.carmagid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								选择项目：
+								<el-select v-model="CarwashFrom.pid" value-key="pid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in projectsettingsData5" :key="item.pid" :label="item.projectname"
+										:value="item.pid">
+									</el-option>
+								</el-select>
 							</p>
 							<p>
 								总价：
-								<el-input v-model="maintenanceappFrom.yujiallmony" style="width: 260px;" size="small"></el-input>
+								<el-input v-model="CarwashFrom.amountreceivable" style="width: 260px;" size="small"></el-input>
 							</p>
-							<P>
-								预约进厂时间：
-								<el-input v-model="maintenanceappFrom.yujisetcar" style="width: 260px;" size="small"></el-input>
-							</P>
-							<P>
-								预约交车时间：
-								<el-input v-model="maintenanceappFrom.yujisetcartime" style="width: 260px;" size="small"></el-input>
-							</P>
-							<P>
-								客户描述：
-								<el-input v-model="maintenanceappFrom.kehudepict" style="width: 260px;" size="small"></el-input>
-							</P>
-							<P>
-								失约原因：
-								<el-input v-model="maintenanceappFrom.shiyucause" style="width: 260px;" size="small"></el-input>
-							</P>
-							<P>
-								备注：
-								<el-input v-model="maintenanceappFrom.beizhu" style="width: 260px;" size="small"></el-input>
-							</P>
 						</div>
 					</div>
 				</el-form-item>
@@ -79,62 +72,114 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="dialogFormVisible3 = false" size="small">关 闭</el-button>
-					<el-button type="primary" @click="insertRegister()" size="small">保 存</el-button>
+					<el-button type="primary" @click="insertCarwaslist()" size="small">保 存</el-button>
+				</span>
+			</template>
+		</el-dialog>
+		<!-- 修改 -->
+		<el-dialog title="预约开单" v-model="dialogFormVisible" custom-class="dialogClass">
+			<el-form :model="CarwashFrom" ref="CarwashFrom">
+				<el-form-item>
+					<div style="display: flex;">
+						<div style="border: #2C3E50 solid 1px;width: 360px;">
+							<p>
+								选择客户：
+								<el-select v-model="CarwashFrom.kehuid" value-key="cid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in customerData3" :key="item.cid" :label="item.cname"
+										:value="item.cid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								顾问：
+								<el-select v-model="CarwashFrom.eid" value-key="eid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in empData4" :key="item.eid" :label="item.name"
+										:value="item.eid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								门店：
+								<el-select v-model="CarwashFrom.sid" value-key="sid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in storeData7" :key="item.sid" :label="item.sname"
+										:value="item.sid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								备注：
+								<el-input v-model="CarwashFrom.remarks" style="width: 260px;" size="small"></el-input>
+							</p>
+						</div>
+						<div style="border: #2C3E50 solid 1px;width: 360px;">
+							<p>
+								车牌号：
+								<el-select v-model="CarwashFrom.carmagid" value-key="carmagid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in carmanagementData8" :key="item.carmagid" :label="item.chepai"
+										:value="item.carmagid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								选择项目：
+								<el-select v-model="CarwashFrom.xiangmuid" value-key="pid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in projectsettingsData5" :key="item.pid" :label="item.projectname"
+										:value="item.pid">
+									</el-option>
+								</el-select>
+							</p>
+						</div>
+					</div>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="dialogFormVisible = false" size="small">关 闭</el-button>
+					<el-button type="primary" @click="updateAllCarwaslist()" size="small">保 存</el-button>
 				</span>
 			</template>
 		</el-dialog>
 	</div>
 	<div style="margin-top: 20px;">
-		<el-table :data="maintenanceappData" height="500" border style="width: 100%">
-			<el-table-column prop="maintenanceappid" label="序号" align="center" fixed="left">
+		<el-table :data="CarwashData" border style="width: 100%">
+			<el-table-column prop="carid" label="序号" align="center" fixed="left">
 			</el-table-column>
-			<el-table-column prop="name" label="操作" width="286" align="center">
+			<el-table-column prop="" label="操作" width="286" align="center">
 				<template #default="scope">
-					<el-button type="primary" size="small">删除</el-button>
-					<el-button type="primary" size="small">修改</el-button>
-					<el-button type="primary" size="small">收款</el-button>
-					<el-button type="primary" size="small">转维修</el-button>
+					<!-- <el-button type="primary" size="small">删除</el-button> -->
+					<el-button type="primary" size="small" @click="updateAllCarwaslistShow(scope.row)" :disabled="scope.row.documentstatus=='1'">修改</el-button>
+					<el-button type="primary" size="small" @click="updateCarwaslistSta(scope.row)" :disabled="scope.row.documentstatus=='1'">收款</el-button>
 				</template>
 			</el-table-column>
-			<el-table-column prop="appno" label="预约单号" align="center">
+			<el-table-column prop="store.sname" label="所属门店" align="center">
 			</el-table-column>
-			<el-table-column prop="mainorder" label="单据日期" align="center">
+			<el-table-column prop="documentnumber" label="单据编号" align="center">
 			</el-table-column>
-			<el-table-column prop="mainorderstuta" label="单据状态" align="center">
+			<el-table-column prop="documentstatus" label="单据状态" align="center">
 				<template v-slot="scope">
-					<p v-if="scope.row.mainorderstuta=='0'">已收款</p>
-					<p v-if="scope.row.mainorderstuta=='1'">已完成</p>
-					<p v-if="scope.row.mainorderstuta=='2'">已登记</p>
+					<p v-if="scope.row.documentstatus=='1'" style="background-color: #e2e2e2;color: #2C3E50;">已收款</p>
+					<p v-if="scope.row.documentstatus=='0'" style="background-color: #ff0000;color: #FFFFFF;">已登记</p>
 				</template>
 			</el-table-column>
-			<el-table-column prop="chepai" label="车牌号" align="center">
+			<el-table-column prop="carmanagement.chepai" label="车牌号" align="center">
 			</el-table-column>
-			<el-table-column prop="c_name" label="联系人" align="center">
+			<el-table-column prop="customer.cname" label="联系人" align="center">
 			</el-table-column>
-			<el-table-column prop="c_phone" label="联系电话" align="center">
+			<el-table-column prop="customer.cphone" label="联系电话" align="center">
 			</el-table-column>
-			<el-table-column prop="servicename" label="维修类型" align="center">
+			<el-table-column prop="projectsettings.custaccountprcie" label="工时费" align="center">
 			</el-table-column>
-			<el-table-column prop="workHours" label="预计工时" align="center">
+			<el-table-column prop="amountreceivable" label="应收金额" align="center">
 			</el-table-column>
-			<el-table-column prop="custAccountPrcie" label="预计工时费" align="center">
+			<el-table-column prop="emp.name" label="服务顾问" align="center">
 			</el-table-column>
-			<el-table-column prop="cusprice" label="预计材料费" align="center">
-			</el-table-column>
-			<el-table-column prop="yujiallmony" label="预计总价" align="center">
-			</el-table-column>
-			<el-table-column prop="yujisetcar" label="预计进厂时间" align="center">
-			</el-table-column>
-			<el-table-column prop="yujisetcartime" label="预计交车时间" align="center">
-			</el-table-column>
-			<el-table-column prop="name" label="维修顾问" align="center">
-			</el-table-column>
-			<el-table-column prop="kehudepict" label="客户陈述" align="center">
-			</el-table-column>
-			<el-table-column prop="shiyucause" label="失约原因" align="center">
-			</el-table-column>
-			<el-table-column prop="beizhu" label="备注" align="center">
-			</el-table-column>
+			<!-- <el-table-column prop="remarks" label="备注" align="center">
+			</el-table-column> -->
 		</el-table>
 	</div>
 		<div class="block">
@@ -157,71 +202,66 @@
 	export default {
 		data() {
 			return {
-				input3: '',
-				select: '1',
-				formLabelWidth: '100px',
-				EmpData: [],
-				SourceData: [],
-				maintenanceappData:[],
-				CourseData: [],
-				DetailcourseData: [],
-				ReturnvisitData: [],
-				RegisterData: [],
-				multipleSelection: [],
-				multipleSelection2: [],
+				CarwashData:[],
 				dialogFormVisible3: false,
 				dialogFormVisible: false,
-				dialogFormVisible2: false,
-				newborder: "1px solid #152036",
-				newcolor: "#999",
-				newcursor: 'default',
 				pageInfo: {
-					currentPage: 1, //当前页数，由用户指定
-					pagesize: 3, //每页显示的条数
-					total: 0, //总记录条数，数据库查出来的
-					c_name:''
+					currentPage: 1,
+					pagesize: 3,
+					total: 0,
+					name:''
 				},
-				maintenanceappFrom: {
-					maintenanceappid:'',
-					serviceid:'',
+				CarwashFrom: {
 					carid:'',
-					kehuid:'',
-					empid:'',
+					store:{},
+					sId:'',
+					carmanagement:{},
+					carmagid:'',
+					emp:{},
+					eId:'',
+					projectsettings:{},
 					xiangmuid:'',
-					cailiaoid:'',
-					mendianid:'',
-					appno:'',
-					mainorder:'',
-					mainorderstuta:'',
-					yujiallmony:'',
-					yujisetcar:'',
-					yujisetcartime:'',
-					kehudepict:'',
-					shiyucause:'',
-					beizhu:''
+					customer:{},
+					kehuid:'',
+					documentnumber:'',
+					documentdate:'',
+					documentstatus:'',
+					remarks:'',
+					amountreceivable:''
 				}
 			}
 		},
 		methods: {
-			selectConter() {
-			const _this = this
-			console.log(this.pageInfo)
-			this.axios.get("http://localhost:8081/selectmaintenanceapp", {
-					params: this.pageInfo
-				})
-				.then(function(response) {
-					_this.maintenanceappData = response.data.list
-					_this.pageInfo.total = response.data.total
-					console.log(response)
-				}).catch(function(error) {
-					console.log(error)
-				})
+			handleCurrentChange(page) {
+				this.pageInfo.currentPage = page
+				var ps = qs.stringify(this.pageInfo)
+				console.log(ps)
+				this.selectConter()
 			},
-			insertRegister() {
-				const _this = this
-				this.axios.post("http://localhost:8081/addRegister", this.maintenanceappFrom, {
+			handleSizeChange(size) {
+				this.pageInfo.pagesize = size
+				var ps = qs.stringify(this.pageInfo)
+				console.log(ps)
+				this.selectConter()
+			},
+			selectConter() {
+				var _this = this
+				this.axios.get("http://localhost:8081/asms/selectAllCarwashlike", {
 						params: this.pageInfo
 					})
+					.then(function(response) {
+						// 数据接收
+						console.log(response.data)
+						_this.CarwashData = response.data.list
+						_this.pageInfo.total = response.data.total
+					}).catch(function(error) {
+						console.log(error)
+					})
+			},
+			insertCarwaslist(){
+				const _this = this
+				this.CarwashFrom.documentnumber = "XCKD"+Date.now()
+				this.axios.post("http://localhost:8081/asms/insertCarwaslist", this.CarwashFrom)
 					.then(function(response) {
 						console.log("添加成功")
 						console.log(response)
@@ -231,27 +271,99 @@
 					})
 				this.dialogFormVisible3 = false
 			},
-			handleSizeChange(pagesize) {
-				var _this = this
-				this.pageInfo.pagesize = pagesize
-				var ps = qs.stringify(this.pageInfo) // eslint-disable-line no-unused-vars
-				this.selectConter()
+			// 修改显示
+			updateAllCarwaslistShow(row){
+				const _this = this
+				this.dialogFormVisible = true
+				this.CarwashFrom.carid = row.carid
+				this.CarwashFrom.sid = row.sid
+				console.log("================================"+row.sid)
+				this.CarwashFrom.carmagid = row.carmagid
+				console.log("================================"+row.carmagid)
+				this.CarwashFrom.eid = row.eid
+				this.CarwashFrom.xiangmuid = row.xiangmuid
+				console.log("================================"+this.CarwashFrom.xiangmuid+"------------"+row.xiangmuid)
+				this.CarwashFrom.kehuid = row.kehuid
+				this.CarwashFrom.documentnumber = row.documentnumber
+				this.CarwashFrom.documentdate = row.documentdate
+				this.CarwashFrom.documentstatus = row.documentstatus
+				this.CarwashFrom.remarks = row.remarks
+				this.CarwashFrom.amountreceivable = row.amountreceivable
 			},
-			handleCurrentChange(currentPage) {
-				var _this = this
-				this.pageInfo.currentPage = currentPage
-				var ps = qs.stringify(this.pageInfo) // eslint-disable-line no-unused-vars
-				this.selectConter()
+			// 修改方法
+			updateAllCarwaslist() {
+				const _this = this
+				console.log(this.CarwashFrom.carid);
+				this.CarwashFrom.carid = this.CarwashFrom.carid
+				this.axios.put("http://localhost:8081/asms/updateAllCarwaslist", this.CarwashFrom)
+					.then(function(response) {
+						console.log(response)
+						_this.selectConter()
+						_this.dialogFormVisible = false
+					}).catch(function(error) {
+						console.log(error)
+					})
 			},
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
-			},
-			handleSelectionChange2(val) {
-				this.multipleSelection2 = val;
+			// 修改状态
+			updateCarwaslistSta(row) {
+				const _this = this
+				this.CarwashFrom.carid = row.carid
+				this.axios.put("http://localhost:8081/asms/updateCarwaslistSta", this.CarwashFrom)
+					.then(function(response) {
+						console.log(response)
+						_this.selectConter()
+						_this.dialogFormVisible = false
+					}).catch(function(error) {
+						console.log(error)
+					})
 			}
 		},
 		created() {
-				this.selectConter()
+			const _this = this
+			// 车辆外键显示
+			this.axios.get("http://localhost:8081/asms/carmanagement/findall2")
+			.then(function(response){
+				console.log("车辆外键显示：",response.data)
+				_this.carmanagementData8 = response.data
+			}).catch(function(error){
+				console.log(error)
+			}),
+			// 门店外键显示
+			this.axios.get("http://localhost:8081/asms/store/selectAll")
+			.then(function(response){
+				console.log("门店外键显示：",response.data)
+				_this.storeData7 = response.data
+			}).catch(function(error){
+				console.log(error)
+			}),
+			// 项目外键显示
+			this.axios.get("http://localhost:8081/asms/projectsettings/selectProjectsettings")
+			.then(function(response){
+				console.log("项目外键显示：",response.data)
+				_this.projectsettingsData5 = response.data
+				
+			}).catch(function(error){
+				console.log(error)
+			}),
+			// 员工外键显示
+			this.axios.get("http://localhost:8081/asms/emp/findall")
+			.then(function(response){
+				console.log("员工外键显示：",response.data)
+				_this.empData4 = response.data
+				
+			}).catch(function(error){
+				console.log(error)
+			}),
+			// 客户外键显示
+			this.axios.get("http://localhost:8081/asms/customer/findalls")
+			.then(function(response){
+				console.log("客户外键显示：",response.data)
+				_this.customerData3 = response.data
+				
+			}).catch(function(error){
+				console.log(error)
+			}),
+			this.selectConter()
 		}
 	}
 </script>

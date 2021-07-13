@@ -24,12 +24,6 @@
 								<el-menu-item index="1-3">维修开单</el-menu-item>
 							</router-link>
 						</el-menu-item-group>
-						<el-menu-item-group>
-							<router-link to="/Suppliessales">
-								<el-menu-item index="1-4">用品销售</el-menu-item>
-							</router-link>
-						</el-menu-item-group>
-
 					</el-submenu>
 					<el-submenu index="2">
 						<template #title><i class="el-icon-message"></i>客户</template>

@@ -114,6 +114,108 @@
 				</span>
 			</template>
 		</el-dialog>
+		<!-- 修改 -->
+		<el-dialog title="预约开单" v-model="dialogFormVisible" custom-class="dialogClass">
+			<el-form :model="maintenanceappFrom" ref="maintenanceappFrom">
+				<el-form-item>
+					<div style="display: flex;">
+						<div style="border: #2C3E50 solid 1px;width: 360px;">
+							<p>
+								选择客户：
+								<el-select v-model="maintenanceappFrom.kehuid" value-key="cid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in customerData3" :key="item.cid" :label="item.cname"
+										:value="item.cid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								选择维修类型：
+								<el-select v-model="maintenanceappFrom.serviceid" value-key="serviceid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in serviceData2" :key="item.serviceid" :label="item.servicename"
+										:value="item.serviceid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								车牌号：
+								<el-select v-model="maintenanceappFrom.carid" value-key="carid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in carmanagementData8" :key="item.carmagid" :label="item.chepai"
+										:value="item.carmagid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								顾问：
+								<el-select v-model="maintenanceappFrom.empid" value-key="eid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in empData4" :key="item.eid" :label="item.name"
+										:value="item.eid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								选择项目：
+								<el-select v-model="maintenanceappFrom.xiangmuid" value-key="pid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in projectsettingsData5" :key="item.pid" :label="item.projectname"
+										:value="item.pid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								选择材料：
+								<el-select v-model="maintenanceappFrom.cailiaoid" value-key="coId" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in cailiaoData6" :key="item.coId" :label="item.coName"
+										:value="item.coId">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								门店：
+								<el-select v-model="maintenanceappFrom.mendianid" value-key="sid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in storeData7" :key="item.sid" :label="item.sname"
+										:value="item.sid">
+									</el-option>
+								</el-select>
+							</p>
+						</div>
+						<div style="border: #2C3E50 solid 1px;width: 360px;">
+							<P>
+								预约进厂时间：
+								<el-input type="date" v-model="maintenanceappFrom.yujisetcar" style="width: 260px;" size="small"></el-input>
+							</P>
+							<P>
+								预约交车时间：
+								<el-input  type="date" v-model="maintenanceappFrom.yujisetcartime" style="width: 260px;" size="small"></el-input>
+							</P>
+							<P>
+								客户描述：
+								<el-input v-model="maintenanceappFrom.kehudepict" style="width: 260px;" size="small"></el-input>
+							</P>
+							<P>
+								失约原因：
+								<el-input v-model="maintenanceappFrom.shiyucause" style="width: 260px;" size="small"></el-input>
+							</P>
+							<P>
+								备注：
+								<el-input v-model="maintenanceappFrom.beizhu" style="width: 260px;" size="small"></el-input>
+							</P>
+						</div>
+					</div>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="dialogFormVisible3 = false" size="small">关 闭</el-button>
+					<el-button type="primary" @click="updateAllapp()" size="small">保 存</el-button>
+				</span>
+			</template>
+		</el-dialog>
 	</div>
 	<div style="margin-top: 20px;">
 		<el-table :data="maintenanceappData" height="500" border style="width: 100%">
@@ -121,8 +223,8 @@
 			</el-table-column>
 			<el-table-column prop="name" label="操作" width="286" align="center">
 				<template #default="scope">
-					<el-button type="primary" size="small">删除</el-button>
-					<el-button type="primary" size="small">修改</el-button>
+					<!-- <el-button type="primary" size="small">删除</el-button> -->
+					<el-button type="primary" size="small" @click="updateAllappShow(scope.row)" :disabled="scope.row.mainorderstuta=='3'">修改</el-button>
 					<el-button type="primary" size="small" @click="updatemaintenanceappmony(scope.row)" :disabled="scope.row.mainorderstuta=='3'">收款</el-button>
 					<el-button type="primary" size="small" @click="addMainbillingzhuanweixiu(scope.row)" :disabled="scope.row.mainorderstuta=='0'">转维修</el-button>
 				</template>
@@ -192,6 +294,7 @@
 				storeData7:[],
 				maintenanceappData8:[],
 				dialogFormVisible3: false,
+				dialogFormVisible: false,
 				maintenanceappFrom: {
 					maintenanceappid:'',
 					serviceid:'',
@@ -252,6 +355,49 @@
 			}
 		},
 		methods: {
+			// 修改显示
+			updateAllappShow(row){
+				const _this = this
+				this.dialogFormVisible = true
+				this.maintenanceappFrom.maintenanceappid = row.maintenanceappid
+				this.maintenanceappFrom.appno = row.appno
+				this.maintenanceappFrom.serviceid = row.serviceid
+				this.maintenanceappFrom.carid = row.carid
+				this.maintenanceappFrom.kehuid = row.kehuid
+				this.maintenanceappFrom.empid = row.empid
+				this.maintenanceappFrom.xiangmuid = row.xiangmuid
+				this.maintenanceappFrom.cailiaoid = row.cailiaoid
+				this.maintenanceappFrom.mendianid = row.mendianid
+				this.maintenanceappFrom.mainorder = row.mainorder
+				this.maintenanceappFrom.mainorderstuta = row.mainorderstuta
+				this.maintenanceappFrom.yujiallmony = row.yujiallmony
+				this.maintenanceappFrom.yujisetcar = row.yujisetcar
+				this.maintenanceappFrom.yujisetcartime = row.yujisetcartime
+				this.maintenanceappFrom.kehudepict = row.kehudepict
+				this.maintenanceappFrom.shiyucause = row.shiyucause
+				this.maintenanceappFrom.beizhu = row.beizhu
+			},
+			// 修改方法
+			updateAllapp() {
+				const _this = this
+				console.log(this.maintenanceappFrom.maintenanceappid);
+				this.maintenanceappFrom.maintenanceappid = this.maintenanceappFrom.maintenanceappid
+				this.axios.put("http://localhost:8081/asms/updateAllapp", this.maintenanceappFrom)
+					.then(function(response) {
+						console.log(response)
+						_this.axios.get("http://localhost:8081/asms/selectByPrimaryKey")
+							.then(function(response) {
+								_this.maintenanceappData = response.data
+								// _this.pageInfo.total = response.data.total
+								console.log(response)
+							}).catch(function(error) {
+								console.log(error)
+							})
+						_this.dialogFormVisible = false
+					}).catch(function(error) {
+						console.log(error)
+					})
+			},
 			// 修改收款状态
 			updatemaintenanceappmony(row){
 				const _this = this
@@ -325,6 +471,7 @@
 			},
 			addmaintenanceapp(){
 				const _this = this
+				this.maintenanceappFrom.appno = "YYKD"+Date.now()
 				this.axios.post("http://localhost:8081/asms/insertMaintenanceapp", this.maintenanceappFrom)
 					.then(function(response) {
 						console.log("添加成功")
@@ -345,13 +492,11 @@
 		},
 		created() {
 			const _this = this
-			console.log(this.pageInfo)
 			// 车辆外键显示
 			this.axios.get("http://localhost:8081/asms/carmanagement/findall2")
 			.then(function(response){
 				console.log("车辆外键显示：",response.data)
 				_this.carmanagementData8 = response.data
-				
 			}).catch(function(error){
 				console.log(error)
 			}),

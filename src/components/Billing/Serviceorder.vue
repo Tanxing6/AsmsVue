@@ -76,11 +76,6 @@
 						</div>
 						<div style="border: #2C3E50 solid 1px;width: 360px;">
 							<p>
-								单据号：
-								<el-input v-model="MainbillingFrom.mainbillingno" style="width: 260px;" size="small">
-								</el-input>
-							</p>
-							<p>
 								总价：
 								<el-input v-model="MainbillingFrom.yujiallmony" style="width: 260px;" size="small">
 								</el-input>
@@ -126,6 +121,118 @@
 				</span>
 			</template>
 		</el-dialog>
+		<!-- 修改 -->
+		<el-dialog title="修改信息" v-model="dialogFormVisible" custom-class="dialogClass">
+			<el-form :model="MainbillingFrom" ref="MainbillingFrom">
+				<el-form-item>
+					<div style="display: flex;">
+						<div style="border: #2C3E50 solid 1px;width: 360px;">
+							<p>
+								选择客户：
+								<el-select v-model="MainbillingFrom.kehuid" value-key="cid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in customerData3" :key="item.cid" :label="item.cname"
+										:value="item.cid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								选择维修类型：
+								<el-select v-model="MainbillingFrom.serviceid" value-key="serviceid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in serviceData2" :key="item.serviceid"
+										:label="item.servicename" :value="item.serviceid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								车牌号：
+								<el-select v-model="MainbillingFrom.chepai" value-key="carid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in carmanagementData8" :key="item.carmagid"
+										:label="item.chepai" :value="item.carmagid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								顾问：
+								<el-select v-model="MainbillingFrom.empid" value-key="eid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in empData4" :key="item.eid" :label="item.name"
+										:value="item.eid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								选择项目：
+								<el-select v-model="MainbillingFrom.xiangmuid" value-key="pid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in projectsettingsData5" :key="item.pid"
+										:label="item.projectname" :value="item.pid">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								选择材料：
+								<el-select v-model="MainbillingFrom.cailiaoid" value-key="coId" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in cailiaoData6" :key="item.coId" :label="item.coName"
+										:value="item.coId">
+									</el-option>
+								</el-select>
+							</p>
+							<p>
+								门店：
+								<el-select v-model="MainbillingFrom.mendianid" value-key="sid" placeholder="请选择"
+									size="mini">
+									<el-option v-for="item in storeData7" :key="item.sid" :label="item.sname"
+										:value="item.sid">
+									</el-option>
+								</el-select>
+							</p>
+						</div>
+						<div style="border: #2C3E50 solid 1px;width: 360px;">
+							<P>
+								预约进厂时间：
+								<el-input type="date" v-model="MainbillingFrom.yujisetcar" style="width: 260px;"
+									size="small"></el-input>
+							</P>
+							<P>
+								预约交车时间：
+								<el-input type="date" v-model="MainbillingFrom.yujisetcartime" style="width: 260px;"
+									size="small"></el-input>
+							</P>
+							<P>
+								客户描述：
+								<el-input v-model="MainbillingFrom.kehudepict" style="width: 260px;" size="small">
+								</el-input>
+							</P>
+							<P>
+								随车物品：
+								<el-input v-model="MainbillingFrom.suichewup" style="width: 260px;" size="small">
+								</el-input>
+							</P>
+							<P>
+								失约原因：
+								<el-input v-model="MainbillingFrom.shiyucause" style="width: 260px;" size="small">
+								</el-input>
+							</P>
+							<P>
+								备注：
+								<el-input v-model="MainbillingFrom.beizhu" style="width: 260px;" size="small">
+								</el-input>
+							</P>
+						</div>
+					</div>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="dialogFormVisible = false" size="small">关 闭</el-button>
+					<el-button type="primary" @click="updateAllMainbilling()" size="small">保 存</el-button>
+				</span>
+			</template>
+		</el-dialog>
 	</div>
 	<div style="margin-top: 20px;">
 		<el-table :data="mainbillingData" height="500" border style="width: 100%">
@@ -133,8 +240,8 @@
 			</el-table-column>
 			<el-table-column prop="" label="操作" width="286" align="center">
 				<template #default="scope">
-					<el-button type="primary" size="small">删除</el-button>
-					<el-button type="primary" size="small">修改</el-button>
+					<!-- <el-button type="primary" size="small">删除</el-button> -->
+					<el-button type="primary" size="small" @click="updateAllMainbillingShow(scope.row)" :disabled="scope.row.mainorderstuta=='3'">修改</el-button>
 					<el-button type="primary" size="small" @click="updateMainbilling(scope.row)" :disabled="scope.row.mainorderstuta=='3'">收款</el-button>
 				</template>
 			</el-table-column>
@@ -205,6 +312,7 @@
 				formLabelWidth: '100px',
 				mainbillingData: [],
 				dialogFormVisible3: false,
+				dialogFormVisible: false,
 				MainbillingFrom: {
 					mainbillingid: '',
 					service: {},
@@ -239,7 +347,53 @@
 			}
 		},
 		methods: {
-			updateMainbilling(row) {
+			// 修改显示
+			updateAllMainbillingShow(row){
+				const _this = this
+				this.dialogFormVisible = true
+				this.MainbillingFrom.mainbillingid = row.mainbillingid
+				this.MainbillingFrom.serviceid = row.serviceid
+				this.MainbillingFrom.maintenanceappid = row.maintenanceappid
+				this.MainbillingFrom.kehuid = row.kehuid
+				this.MainbillingFrom.empid = row.empid
+				this.MainbillingFrom.mainbillingno = row.mainbillingno
+				this.MainbillingFrom.xiangmuid = row.xiangmuid
+				this.MainbillingFrom.cailiaoid = row.cailiaoid
+				this.MainbillingFrom.mendianid = row.mendianid
+				this.MainbillingFrom.chepai = row.chepai
+				this.MainbillingFrom.mainorder = row.mainorder
+				this.MainbillingFrom.mainorderstuta = row.mainorderstuta
+				this.MainbillingFrom.yujisetcar = row.yujisetcar
+				this.MainbillingFrom.yujisetcartime = row.yujisetcartime
+				this.MainbillingFrom.kehudepict = row.kehudepict
+				this.MainbillingFrom.suichewup = row.suichewup
+				this.MainbillingFrom.favourable = row.favourable
+				this.MainbillingFrom.yujiallmony = row.yujiallmony
+				this.MainbillingFrom.overmonytime = row.overmonytime
+				this.MainbillingFrom.orfanxiu = row.orfanxiu
+				this.MainbillingFrom.beizhu = row.beizhu
+			},
+			// 修改方法
+			updateAllMainbilling() {
+				const _this = this
+				console.log(this.MainbillingFrom.mainbillingid);
+				this.MainbillingFrom.mainbillingid = this.MainbillingFrom.mainbillingid
+				this.axios.put("http://localhost:8081/asms/updateAllMainbilling", this.MainbillingFrom)
+					.then(function(response) {
+						console.log(response)
+						_this.axios.get("http://localhost:8081/asms/selectMainbilling")
+							.then(function(response) {
+								_this.mainbillingData = response.data
+								console.log(response)
+							}).catch(function(error) {
+								console.log(error)
+							})
+						_this.dialogFormVisible = false
+					}).catch(function(error) {
+						console.log(error)
+					})
+			},
+			updateMainbilling() {
 				const _this = this
 				this.MainbillingFrom.mainbillingid = row.mainbillingid
 				this.axios.put("http://localhost:8081/asms/updateMainbilling", this.MainbillingFrom)
@@ -259,11 +413,18 @@
 			addMainbillingzhuanweixiu() {
 				const _this = this
 				this.MainbillingFrom.maintenanceappid = 2
+				this.MainbillingFrom.mainbillingno = "WXKD"+Date.now()
 				this.axios.post("http://localhost:8081/asms/insertMainbilling", this.MainbillingFrom)
 					.then(function(response) {
 						console.log("添加成功")
 						console.log(response)
-						// _this.updatemaintenanceapp(row)
+						_this.axios.get("http://localhost:8081/asms/selectMainbilling")
+						.then(function(response) {
+							_this.mainbillingData = response.data
+							console.log(response)
+						}).catch(function(error) {
+							console.log(error)
+						})
 					}).catch(function(error) {
 						console.log(error)
 					})
