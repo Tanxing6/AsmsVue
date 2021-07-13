@@ -20,36 +20,29 @@
 		</div>
 		<el-tabs type="border-card" style="margin-top: 30px;">
 			<div style="border:1px solid #EBEEF5 ;">
-				<el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" show-summary border style="width: 100%;" @selection-change="handleSelectionChange">
-					<el-table-column prop="djh" label="门店" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="kdrq" label="供货商" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="djlx" label="期初金额" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="采购数量" show-overflow-tooltip>
+				<el-table ref="multipleTable" :data="tableData1" tooltip-effect="dark" height="450" show-summary border style="width: 100%;" @selection-change="handleSelectionChange">
+					<el-table-column prop="sname" label="门店" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="suppliername" label="供货商" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="money" label="期初金额" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="numberd" label="采购数量" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="bh" label="采购金额" show-overflow-tooltip>
+					<el-table-column prop="amout" label="采购金额" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="spmc" label="预付款余额" show-overflow-tooltip>
+					<el-table-column prop="orderamount" label="预付款余额" width="100">
 					</el-table-column>
-					<el-table-column prop="mll" label="已付金额" show-overflow-tooltip>
+					<el-table-column prop="yfamount" label="已付金额" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="djh" label="免付金额" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="kdrq" label="未付金额" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="djlx" label="退货数量" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="退货金额" show-overflow-tooltip>
+					<el-table-column prop="freeAmout" label="免付金额" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="backnumber" label="退货数量" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="yfamount" label="退货金额" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="bh" label="已退金额" show-overflow-tooltip>
-					</el-table-column>
-					<el-table-column prop="spmc" label="免推金额" show-overflow-tooltip>
-					</el-table-column>
-					<el-table-column prop="mll" label="未退金额" show-overflow-tooltip>
-					</el-table-column>
-					<el-table-column prop="mll" label="应付金额" show-overflow-tooltip>
+					<el-table-column prop="amountprice" label="应付金额" show-overflow-tooltip>
 					</el-table-column>
 				</el-table>
 			</div>
 			<div style="float: right;">
 				<el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-				 :page-size="10" layout="total,sizes, prev, pager, next, jumper" :total="20">
+				 :page-size="10" layout="total,sizes, prev, pager, next, jumper" :total="1">
 				</el-pagination>
 			</div>
 
@@ -70,54 +63,7 @@
 			return {
 				input: ref(''),
 				activeName: "q",
-				tableData: [{
-					date: '10001',
-					rq: '2021518',
-					ghs: '供货商A',
-					spbh: '12345',
-					spmc: '苹果12promax',
-					sslb: '电子产品',
-					ck: '总店仓库',
-					dw: '个',
-					sl: '20',
-					hsh: '19',
-					zje: '11880',
-					gg: '件',
-					ys: '石墨色',
-					jbr: '经办人a',
-					bz: '',
-					ywymc: '员工A',
-					xsje: '100000',
-					tkje: '58888',
-					khmc: '欧阳兄',
-					xshjje: '100009',
-					splb: '水果',
-					xssl: '20',
-					zcb: '2999',
-				}, {
-					date: '10002',
-					rq: '2021518',
-					ghs: '供货商B',
-					spbh: '12346',
-					spmc: '苹果13promax',
-					sslb: '电子产品',
-					ck: '总店仓库',
-					dw: '个',
-					sl: '20',
-					hsh: '19',
-					zje: '13880',
-					gg: '件',
-					ys: '月光银',
-					jbr: '经办人b',
-					bz: '',
-					ywymc: '员工B',
-					xsje: '200000',
-					khmc: '文子酱',
-					yhsje: '10010',
-					splb: '电子',
-					xssl: '25',
-					zcb: '299999',
-				}],
+				tableData1: [],
 				shortcuts: [{
 					text: '最近一周',
 					value: (() => {
@@ -161,7 +107,7 @@
 
 			}
 		},
-		/* methods: {
+		 methods: {
 			handleClick(tab, event) {
 				console.log(tab, event);
 			},
@@ -176,10 +122,30 @@
 			},
 			handleSelectionChange(val) {
 				this.multipleSelection = val;
-			}
-		} */
+			},
+			pages() {
+					const token = JSON.parse(sessionStorage.getItem("state"));
+					const _this = this;
+					_this.axios({
+							url: 'http://localhost:8081/asms/mainbilling/wzcghz',
+							method: 'get',
+						})
+						.then(function(response) {
+							console.log("tableData1:", response.data.data)
+							_this.tableData1= response.data.data;
+											_this.cphone = _this.tableData1[0].cphone
+						}).catch(function(error) {
+							console.log(error)
+						})
+				},
+			} ,
+			created() {
+				this.pages();
+			},
 	};
 </script>
 <style>
-
+.el-input {
+	    width: 110px;
+	}
 </style>

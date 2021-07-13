@@ -56,7 +56,7 @@
 		</el-table-column>
 		<el-table-column prop="bcname" label="车身颜色" show-overflow-tooltip>
 		</el-table-column>
-		<el-table-column prop="daoqiyers" label="年检到期日" width="150">
+		<el-table-column prop="daoqiyers" label="年检到期日" width="160">
 		</el-table-column>
 		<el-table-column prop="nextbytime" label="下次保养时间" width="180px">
 		</el-table-column>
