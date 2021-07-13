@@ -61,11 +61,11 @@
 								<el-menu-item index="3-1">采购入库</el-menu-item>
 							</router-link>
 						</el-menu-item-group>
-						<el-menu-item-group>
+						<!-- <el-menu-item-group>
 							<router-link to="/PurchaseOrder">
 								<el-menu-item index="3-2">采购订单</el-menu-item>
 							</router-link>
-						</el-menu-item-group>
+						</el-menu-item-group> -->
 						<el-menu-item-group>
 							<router-link to="/PurchaseReturn">
 								<el-menu-item index="3-3">销售出库</el-menu-item>

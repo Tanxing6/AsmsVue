@@ -12,7 +12,10 @@
 				height="240"
 				@row-click="sss"
 				>
-				
+				<el-table-column
+				      type="index"
+				      width="50">
+				    </el-table-column>
 					<el-table-column prop="cname" label="所属门店" show-overflow-tooltip>
 					</el-table-column>
 					<el-table-column prop="settlementType" label="结算方式" show-overflow-tooltip>
@@ -37,6 +40,10 @@
 				style="width: 100%;"
 				 @selection-change="handleSelectionChange" 
 				 height="300">
+				 <el-table-column
+				       type="index"
+				       width="50">
+				     </el-table-column>
 					<el-table-column prop="documentDate" label="单据日期" show-overflow-tooltip>
 					</el-table-column>
 					<el-table-column prop="documentNumber" label="单据编号" show-overflow-tooltip>
