@@ -3,29 +3,64 @@
 	
 	<el-tabs type="border-card">
 			<div style="border:1px solid #EBEEF5 ;">
-				<el-table ref="multipleTable" :data="tableData3" show-summary border tooltip-effect="dark" style="width: 100%;height: 200px;" @selection-change="handleSelectionChange" height="200">
-					<el-table-column width="1">
+				<el-table ref="multipleTable" 
+				:data="tableData1" 
+				show-summary border 
+				tooltip-effect="dark" 
+				style="width: 100%;" 
+				@selection-change="handleSelectionChange" 
+				height="240"
+				@row-click="sss"
+				>
+				
+					<el-table-column prop="cname" label="所属门店" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="dlDate" label="所属门店" show-overflow-tooltip>
+					<el-table-column prop="settlementType" label="结算方式" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="agentName" label="结算方式" show-overflow-tooltip>
+					<el-table-column prop="money" label="期初金额" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="ymlb" label="期初金额" show-overflow-tooltip>
+					<el-table-column prop="ssje" label="收入金额" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="dlNumber" label="收入金额" show-overflow-tooltip>
+					<el-table-column prop="zfje" label="支出金额" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="dlYFje" label="支出金额" show-overflow-tooltip>
-					</el-table-column>
-					<el-table-column prop="dlSFje" label="期末金额" show-overflow-tooltip>
+					<el-table-column prop="qmje" label="期末金额" show-overflow-tooltip>
 					</el-table-column>
 
 				</el-table>
 				
 			</div>
-			<div>
-				合计：
+			<h5 style="padding-top: 30px;">对账明细:{{zffs}}</h5>
+			<div style="border:1px solid #EBEEF5 ;">
+				<el-table ref="multipleTable" 
+				:data="tableData2" 
+				tooltip-effect="dark" 
+				style="width: 100%;"
+				 @selection-change="handleSelectionChange" 
+				 height="300">
+					<el-table-column prop="documentDate" label="单据日期" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="documentNumber" label="单据编号" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="documentType" label="单据名称" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="cname" label="往来客户" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="chepai" label="车牌号" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="settlementType" label="结算方式" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="orderamount" label="收入金额" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="paidMoney" label="支出金额" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="dqye" label="当前余额" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="operator" label="经手人" show-overflow-tooltip>
+					</el-table-column>
+					<el-table-column prop="remarks" label="备注" show-overflow-tooltip>
+					</el-table-column>
+				</el-table>
 			</div>
-			
 		
 	</el-tabs>
 
@@ -34,10 +69,11 @@
 
 <script>
 	export default {
-		name: "YwycaigouView",
 		data() {
 			return {
-				tableData: [],
+				tableData1: [],
+				tableData2: [],
+				zffs:'',
 				shortcuts: [{
 					text: '最近一周',
 					value: (() => {
@@ -88,6 +124,7 @@
 						id: 1,
 					},
 				selType:'',
+				ssssettlementType:"",
 			}
 
 
@@ -122,155 +159,62 @@ methods: {
 			handleSelectionChange(val) {
 				this.multipleSelection = val;
 			},
-			     
-		}
-
-		/* methods: {
-			toggleSelection(rows) {
-				if (rows) {
-					rows.forEach(row => {
-						this.$refs.multipleTable.toggleRowSelection(row);
-					});
-				} else {
-					this.$refs.multipleTable.clearSelection();
-				}
-			},
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
-			},
-			handleSizeChange(size) {
-				const _this = this;
-				this.pageinfo.pageSize = size
-				this.axios.get('http://localhost:8099/vuebolg/documentList/cgdj', {
-					params: _this.pageinfo
-				}).then(function(response) {
-					console.log(response.data)
-					_this.tableData3 = response.data.data.list;
-					_this.pageinfo.total = response.data.data.total
-					console.log(_this.pageinfo.total)
-					console.log("ttt:", _this.tableData3)
-				}).catch(function(error) {
-					console.log(error)
-				})
-			},
-			handleCurrentChange(page) {
-				const _this = this;
-				// var fd={
-				// 				  currentPage:_this.pageinfo.currentPage,
-				// 				  pageSize:_this.pageinfo.pageSize
-				// };
-				this.pageinfo.currentPage = page
-				this.axios.get('http://localhost:8099/vuebolg/documentList/cgdj', {
-					params: _this.pageinfo
-				}).then(function(response) {
-					console.log(response.data)
-					_this.tableData3 = response.data.data.list;
-			
-					_this.pageinfo.total = response.data.data.total
-					console.log(_this.pageinfo.total)
-					for (var i = 0; i < _this.tableData3.length; i++) {
-						_this.tableData3[i].zcb = (_this.tableData3[i].invenTory * _this.tableData3[i].purchasePrice)
-					}
-			
-					console.log("ttt:", _this.tableData3)
-				}).catch(function(error) {
-					console.log(error)
-				})
-				},
-			//分页查询所有的商品 
 			pages() {
-				const _this = this;
-				var fd = {
-					currentPage: _this.pageinfo.currentPage,
-					pageSize: _this.pageinfo.pageSize
-				};
-				_this.axios({
-						url: 'http://localhost:8099/vuebolg/documentList/cgdj',
-						method: 'get',
-						params: fd,
-					})
-					.then(function(response) {
-						console.log("currentPage::", response.data.data)
-						_this.tableData3 = response.data.data.list;
-						_this.pageinfo.total = response.data.data.total
-						console.log(_this.pageinfo.total)
-						console.log("ttt:", _this.tableData3)
-					}).catch(function(error) {
-						console.log(error)
-					})
-			},
-			handleSizeChange1(size) {
-				const _this = this;
-				this.pageinfo.pageSize = size
-				this.axios.get('http://localhost:8099/vuebolg/documentList/djxq', {
-					params: _this.pageinfo
-				}).then(function(response) {
-					console.log(response.data)
-					_this.tableData4 = response.data.data.list;
-					_this.pageinfo.total = response.data.data.total
-					console.log(_this.pageinfo.total)
-					console.log("ttt:", _this.tableData4)
-				}).catch(function(error) {
-					console.log(error)
-				})
-			},
-			handleCurrentChange1(page) {
-				const _this = this;
-				// var fd={
-				// 				  currentPage:_this.pageinfo.currentPage,
-				// 				  pageSize:_this.pageinfo.pageSize
-				// };
-				this.pageinfo.currentPage = page
-				this.axios.get('http://localhost:8099/vuebolg/documentList/djxq', {
-					params: _this.pageinfo
-				}).then(function(response) {
-					console.log(response.data)
-					_this.tableData4 = response.data.data.list;
-			
-					_this.pageinfo.total = response.data.data.total
-					console.log(_this.pageinfo.total)
-					for (var i = 0; i < _this.tableData4.length; i++) {
-						_this.tableData4[i].zcb = (_this.tableData4[i].invenTory * _this.tableData4[i].purchasePrice)
-					}
-			
-					console.log("ttt:", _this.tableData4)
-				}).catch(function(error) {
-					console.log(error)
-				})
+					const token = JSON.parse(sessionStorage.getItem("state"));
+					const _this = this;
+					_this.axios({
+							url: 'http://localhost:8081/asms/mainbilling/zjye',
+							method: 'get',
+						})
+						.then(function(response) {
+							console.log("tableData1:", response.data.data)
+							_this.tableData1= response.data.data;
+											_this.cphone = _this.tableData1[0].cphone
+						}).catch(function(error) {
+							console.log(error)
+						})
 				},
-			//分页查询所有的商品 
-			pages1() {
-				const _this = this;
-				var fd = {
-					currentPage: _this.pageinfo.currentPage,
-					pageSize: _this.pageinfo.pageSize
-				};
-				_this.axios({
-						url: 'http://localhost:8099/vuebolg/documentList/djxq',
-						method: 'get',
-						params: fd,
-					})
-					.then(function(response) {
-						console.log("currentPage::", response.data.data)
-						_this.tableData4 = response.data.data.list;
-						_this.pageinfo.total = response.data.data.total
-						console.log(_this.pageinfo.total)
-						console.log("ttt:", _this.tableData4)
-					}).catch(function(error) {
-						console.log(error)
-					})
+				sss(rows) {
+				  console.log("",rows);
+				  this.zffs = rows.settlementType;
+				  //将选择的单据把一行的值传入
+				  this.ssssettlementType = rows.settlementType;
+				  this.shopfy();
+				  
+				},
+				shopfy() {
+				  this.tableData2.length = 0;
+				  const token = JSON.parse(sessionStorage.getItem("state"));
+				  const _this = this;
+				  var fy = {
+				    settlementtype: this.ssssettlementType,
+				  };
+				  _this
+				    .axios({
+				      url: "http://localhost:8081/asms/mainbilling/selectnumber",
+				      method: "get",
+				      params: fy,
+				    })
+				    .then(function (response) {
+				      _this.tableData2=  response.data.data.rows;
+					  
+				    })
+				    .catch(function (error) {
+				      console.log(error);
+				    });
+				},
+			} ,
+			created() {
+				this.pages();
 			},
-			
-
-		},
-		created() {
-			this.pages();
-			this.pages1();
-		}, */
+			   
 	}
 </script>
 
 <style>
+	.el-input {
+	    width: 110px;
+	}
 	#aaa {
 		width: 150px;
 		margin-left: 30px;
