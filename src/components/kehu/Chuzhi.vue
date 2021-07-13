@@ -10,7 +10,7 @@
 		&nbsp;
 		<div style="float: left;margin-top: 4px;">
 
-			<el-select v-model="pageInfo.branchnames" placeholder="所属门店" id="select1" size="small" @change="suoshufd">
+			<el-select v-model="pageInfo.branchnames" placeholder="所属门店" size="small" @change="suoshufd">
 				<el-option>所有门店</el-option>
 				<el-option v-for="item in suptype" :key="item.branchid" :label="item.branchname" :value="item.branchname">
 				</el-option>

@@ -10,19 +10,16 @@
 		&nbsp;
 		<div style="float: left;margin-top: 4px;">
 			
-			<el-select v-model="pageInfo.sId" placeholder="所属门店" id="select1" size="small" @change="suoshufd">
-				
+			<el-select v-model="pageInfo.sId" placeholder="所属门店"  size="small" @change="suoshufd">
 				<el-option v-for="item in mendian" :key="item.sid" :label="item.sfullname" :value="item.sid">
 				</el-option>
 			</el-select>
 			
-			<el-select v-model="pageInfo.ctId" placeholder="客户类别" id="select1" size="small" @change="suoshufd">
-				
+			<el-select v-model="pageInfo.ctId" placeholder="客户类别"  size="small" @change="suoshufd">	
 				<el-option v-for="item in kehutype" :key="item.ctId" :label="item.ctName" :value="item.ctId">
 				</el-option>
 			</el-select>
-			<el-select v-model="pageInfo.eId" placeholder="销售顾问" id="select1" size="small" @change="suoshufd">
-				
+			<el-select v-model="pageInfo.eId" placeholder="销售顾问"  size="small" @change="suoshufd">
 				<el-option v-for="item in emp" :key="item.eid" :label="item.name" :value="item.eid">
 				</el-option>
 			</el-select>
@@ -90,15 +87,16 @@
 	<!-- 修改商品 -->
 	
 	<!-- <-添加商品-> -->
-	<el-dialog title="基本信息" v-model="addshop">
+	<el-dialog title="基本信息" v-model="addshop" width="50%">
 		<el-form :model="customer" label-width="90px" style="width: 540px;">
-					<el-form-item label="客户名称" :label-width="formLabelWidth">
-						<el-input v-model="customer.cName" size="small"></el-input>
-					</el-form-item>
+					
 					<el-row span="2" :gutter="20">
 						<el-col span="2">
+							<el-form-item label="客户名称" :label-width="formLabelWidth">
+								<el-input v-model="customer.cName" size="small"></el-input>
+							</el-form-item>
 							<el-form-item label="客户类型" :label-width="formLabelWidth">
-								<el-select v-model="customer.ctId" placeholder="请选择" id="select1" size="small">
+								<el-select v-model="customer.ctId" placeholder="请选择" size="small">
 									<el-option v-for="item in kehutype" :key="item.ctId" :label="item.ctName" :value="item.ctId">
 									</el-option>
 								</el-select>
@@ -115,30 +113,31 @@
 						</el-col>
 						<el-col span="3">
 							<el-form-item label="所属分店" :label-width="formLabelWidth">
-								<el-select v-model="customer.sId" placeholder="请选择" id="select1" size="small" @change="suoshufd">
+								<el-select v-model="customer.sId" placeholder="请选择"  size="small" @change="suoshufd">
 									<el-option v-for="item in mendian" :key="item.sid" :label="item.sfullname" :value="item.sid">
 									</el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="性别" :label-width="formLabelWidth">
-								<el-select v-model="customer.cGender" placeholder="请选择" id="select1" size="small">
+								<el-select v-model="customer.cGender" placeholder="请选择" size="small">
 									<el-option v-for="item in xinbie" :key="item.id" :label="item.cGender" :value="item.cGender">
 									</el-option>
 								</el-select>
 							</el-form-item>
 							<el-form-item label="销售顾问" :label-width="formLabelWidth">
-								<el-select v-model="customer.eId" placeholder="请选择" id="select1" size="small">
+								<el-select v-model="customer.eId" placeholder="请选择"  size="small">
 									<el-option v-for="item in emp" :key="item.eid" :label="item.name" :value="item.eid">
 									</el-option>
 								</el-select>
+							</el-form-item>
+							<el-form-item label="联系地址" :label-width="formLabelWidth">
+								<el-input v-model="customer.cAddress" size="small"></el-input>
 							</el-form-item>
 							
 						</el-col>
 					</el-row>
 					
-					<el-form-item label="联系地址" :label-width="formLabelWidth">
-						<el-input v-model="customer.cAddress" size="small"></el-input>
-					</el-form-item>
+					
 					<el-form-item label="备注" :label-width="formLabelWidth">
 						<el-input type="textarea" v-model="customer.cText" size="small"></el-input>
 					</el-form-item>
@@ -368,7 +367,7 @@
 </script>
 
 <style>
-	#aaa {
+	/* #aaa {
 		width: 150px;
 		margin-left: 30px;
 	} 
@@ -389,5 +388,5 @@
 
 	#input_1 {
 		margin-left: -130px;
-	}
+	} */
 </style>

@@ -9,7 +9,7 @@
 	<div style="border: 1px solid skyblue;height: 40px;">
 		&nbsp;
 		<div style="float: left;margin-top: 4px;">
-			<el-select v-model="pageInfo.sId" placeholder="所属门店" id="select1" size="small" @change="suoshufd">
+			<el-select v-model="pageInfo.sId" placeholder="所属门店"  size="small" @change="suoshufd">
 				<el-option v-for="item in mendian" :key="item.sid" :label="item.sfullname" :value="item.sid">
 				</el-option>
 			</el-select>
@@ -75,37 +75,33 @@
 	<!-- <-添加商品-> -->
 	<el-dialog title="基本信息" v-model="addshop">
 		<el-form :model="carmanagement" label-width="100px" style="width: 640px;">
-			<el-form-item label="车牌号" :label-width="formLabelWidth">
-				<el-input v-model="carmanagement.chepai" size="small"></el-input>
-			</el-form-item>
-			<el-form-item label="车架号" :label-width="formLabelWidth">
-				<el-input v-model="carmanagement.chejiano" size="small"></el-input>
-			</el-form-item>
-			<el-form-item label="发动机号" :label-width="formLabelWidth">
-				<el-input v-model="carmanagement.fadongjino" size="small"></el-input>
-			</el-form-item>
+			
+			
 			<el-row span="2">
 				<el-col span="2">
+					<el-form-item label="车牌号" :label-width="formLabelWidth">
+						<el-input v-model="carmanagement.chepai" size="small"></el-input>
+					</el-form-item>
 					<el-form-item label="客户" :label-width="formLabelWidth">
-						<el-select v-model="carmanagement.cId" placeholder="请选择" id="select1" size="small">
+						<el-select v-model="carmanagement.cId" placeholder="请选择" size="small">
 							<el-option v-for="item in kehu" :key="item.cid" :label="item.cname" :value="item.cid">
 							</el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="品牌" :label-width="formLabelWidth">
-						<el-select v-model="carmanagement.bId" placeholder="请选择" id="select1" size="small" @change="suoshufd">
+						<el-select v-model="carmanagement.bId" placeholder="请选择"  size="small" @change="suoshufd">
 							<el-option v-for="item in pingpai" :key="item.bid" :label="item.bname" :value="item.bid">
 							</el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="车系" :label-width="formLabelWidth">
-						<el-select v-model="carmanagement.vsId" placeholder="请选择" id="select1" size="small" @change="suoshufd">
+						<el-select v-model="carmanagement.vsId" placeholder="请选择"  size="small" @change="suoshufd">
 							<el-option v-for="item in chexi" :key="item.vsId" :label="item.vsName" :value="item.vsId">
 							</el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="车身颜色" :label-width="formLabelWidth">
-						<el-select v-model="carmanagement.bcId" placeholder="请选择" id="select1" size="small" @change="suoshufd">
+						<el-select v-model="carmanagement.bcId" placeholder="请选择"  size="small" @change="suoshufd">
 							<el-option v-for="item in color" :key="item.bcId" :label="item.bcName" :value="item.bcId">
 							</el-option>
 						</el-select>
@@ -127,20 +123,26 @@
 
 				</el-col>
 				<el-col span="3">
+					<el-form-item label="车架号" :label-width="formLabelWidth">
+						<el-input v-model="carmanagement.chejiano" size="small"></el-input>
+					</el-form-item>
+					<el-form-item label="发动机号" :label-width="formLabelWidth">
+						<el-input v-model="carmanagement.fadongjino" size="small"></el-input>
+					</el-form-item>
 					<el-form-item label="所属分店" :label-width="formLabelWidth">
-						<el-select v-model="carmanagement.sId" placeholder="请选择" id="select1" size="small" @change="suoshufd">
+						<el-select v-model="carmanagement.sId" placeholder="请选择"  size="small" @change="suoshufd">
 							<el-option v-for="item in mendian" :key="item.sid" :label="item.sfullname" :value="item.sid">
 							</el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="车辆类型" :label-width="formLabelWidth">
-						<el-select v-model="carmanagement.vId" placeholder="请选择" id="select1" size="small">
+						<el-select v-model="carmanagement.vId" placeholder="请选择" size="small">
 							<el-option v-for="item in type" :key="item.vid" :label="item.vname" :value="item.vid">
 							</el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="内饰颜色" :label-width="formLabelWidth">
-						<el-select v-model="carmanagement.iId" placeholder="请选择" id="select1" size="small" @change="suoshufd">
+						<el-select v-model="carmanagement.iId" placeholder="请选择" size="small" @change="suoshufd">
 							<el-option v-for="item in neishi" :key="item.iid" :label="item.iname" :value="item.iid">
 							</el-option>
 						</el-select>
@@ -156,7 +158,7 @@
 						<el-input v-model="carmanagement.nextbylichen" size="small"></el-input>
 					</el-form-item>
 					<el-form-item label="是否本店购买" :label-width="formLabelWidth">
-						<el-select v-model="carmanagement.yesorno" placeholder="请选择" id="select1" size="small" @change="suoshufd">
+						<el-select v-model="carmanagement.yesorno" placeholder="请选择" size="small" @change="suoshufd">
 							<el-option v-for="item in isbendian" :key="item.id" :label="item.yesorno" :value="item.yesorno">
 							</el-option>
 							

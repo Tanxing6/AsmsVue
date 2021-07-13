@@ -10,12 +10,12 @@
 		&nbsp;
 		<div style="float: left;margin-top: 4px;">
 
-			<el-select v-model="pageInfo.branchnames" placeholder="所属门店" id="select1" size="small" @change="suoshufd">
+			<el-select v-model="pageInfo.branchnames" placeholder="所属门店"  size="small" @change="suoshufd">
 				<el-option>所有门店</el-option>
 				<el-option v-for="item in suptype" :key="item.branchid" :label="item.branchname" :value="item.branchname">
 				</el-option>
 			</el-select>
-			<el-select v-model="pageInfo.branchnames" placeholder="单据状态" id="select1" size="small" @change="suoshufd">
+			<el-select v-model="pageInfo.branchnames" placeholder="单据状态"  size="small" @change="suoshufd">
 				<el-option>全部</el-option>
 				<el-option>已登记</el-option>
 				<el-option>已收款</el-option>
@@ -97,7 +97,7 @@
 			<el-row span="4">
 				<el-col span="2">
 					<el-form-item label="客户姓名" :label-width="formLabelWidth">
-						<el-select v-model="memberStored.cName" placeholder="请选择" id="select1" size="small" @change="findkehubyid">
+						<el-select v-model="memberStored.cName" placeholder="请选择"  size="small" @change="findkehubyid">
 							<el-option v-for="item in kehu" :key="item.cid" :label="item.cname" :value="item.cname">
 							</el-option>
 						</el-select>
@@ -124,13 +124,13 @@
 				</el-col>
 				<el-col span="2">
 					<el-form-item label="所属门店" :label-width="formLabelWidth">
-						<el-select v-model="memberStored.sName" placeholder="请选择" id="select1" size="small">
+						<el-select v-model="memberStored.sName" placeholder="请选择"  size="small">
 							<el-option v-for="item in mendian" :key="item.sid" :label="item.sfullname" :value="item.sfullname">
 							</el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="销售顾问" :label-width="formLabelWidth">
-						<el-select v-model="memberStored.userName" placeholder="请选择" id="select1" size="small">
+						<el-select v-model="memberStored.userName" placeholder="请选择" size="small">
 							<el-option v-for="item in emp" :key="item.eid" :label="item.name" :value="item.name">
 							</el-option>
 						</el-select>
