@@ -56,7 +56,6 @@ const routes=[
 	{path:'/Cheliang',component:Cheliang},
 	{path:'/Chuzhi',component:Chuzhi},
 	{path:'/Huiyuan',component:Huiyuan},
-	{path:'/Jiage',component:Jiage},
 	{path:'/Kehu',component:Kehu},
 	
 	// 仓库

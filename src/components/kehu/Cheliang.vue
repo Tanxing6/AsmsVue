@@ -29,19 +29,19 @@
 
 	<!-- 供货商数据列表 -->
 	<el-table ref="supplierform" :data="tableData" highlight-current-row @current-change="handleCurrentChange2"
-	 tooltip-effect="dark" style="width: 100%;" @selection-change="handleSelectionChange" border >
+	 tooltip-effect="dark" style="width: 100%;" @selection-change="handleSelectionChange" border height="450">
 		 <el-table-column type="index" label="序号" width="55">
 		 </el-table-column>
 		<el-table-column type="selection" width="55">
 		</el-table-column>
-		<el-table-column prop="" label="操作" width="220">
+		<!-- <el-table-column prop="" label="操作" width="220">
 			<template #default="scope" >
 				<el-button type="text" size="mini">停用</el-button>
 				<el-button type="text" size="mini">查看维修记录</el-button>
 				<el-button type="text" size="mini">编辑</el-button>
 				<el-button type="text" size="mini">删除</el-button>
 			</template>
-		</el-table-column>
+		</el-table-column> -->
 		<el-table-column prop="sname" label="所属门店" width="150">
 		</el-table-column>
 		<el-table-column prop="cname" label="客户名称" show-overflow-tooltip>
@@ -56,7 +56,7 @@
 		</el-table-column>
 		<el-table-column prop="bcname" label="车身颜色" show-overflow-tooltip>
 		</el-table-column>
-		<el-table-column prop="daoqiyers" label="年检到期日" width="150">
+		<el-table-column prop="daoqiyers" label="年检到期日" width="160">
 		</el-table-column>
 		<el-table-column prop="nextbytime" label="下次保养时间" width="180px">
 		</el-table-column>
