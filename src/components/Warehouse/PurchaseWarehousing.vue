@@ -299,7 +299,7 @@
 					});
 			}
 		},
-		mounted() {
+		created() {
 			this.init();
 		}
 	};
