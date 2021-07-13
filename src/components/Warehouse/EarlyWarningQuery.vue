@@ -13,28 +13,33 @@
 				</div>
 			</div>
 			<div>
-				<el-table :data="tableData" border style="width: 100%;text-align: center;">
+				<el-table :data="tableData" fit height="300" border style="width: 100%;font-size: 13px;" empty-text="暂无数据">
 					<el-table-column type="index" label="序号" center width="50"></el-table-column>
 					<el-table-column prop="djh" label="操作" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="kdrq" label="所属门店" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="物资编号" show-overflow-tooltip>
+					<el-table-column prop="sName" label="所属门店" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="coCode" label="物资编号" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="bh" label="物资名称" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="spmc" label="物资条码" show-overflow-tooltip>
+					<el-table-column prop="coName" label="物资名称" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="barcode" label="物资条码" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="mll" label="规格型号" show-overflow-tooltip>
+					<el-table-column prop="specialmodel" label="规格型号" show-overflow-tooltip>
 					</el-table-column>
-					<el-table-column prop="kdrq" label="物资分类" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="djlx" label="物资品牌" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="适用车型" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="施工部位" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="物资单位" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="预警状态" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="最高库存" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="最低库存" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="短缺数量" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="超存数量" show-overflow-tooltip></el-table-column>
-					<el-table-column prop="khhy" label="库存数量" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="ciName" label="物资分类" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="mName" label="物资品牌" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="applimodel" label="适用车型" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="isName" label="施工部位" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="mdTitle" label="物资单位" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="wstate" style="color: red;" label="预警状态" show-overflow-tooltip>
+						<template #default="scope">
+						                    <span v-if="scope.row.wstate==1" style="color: red">短缺</span>
+						                    <span v-else style="color: red">超存</span>
+						                </template>
+					</el-table-column>
+					<el-table-column prop="upx" label="最高库存" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="lox" label="最低库存" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="lo" label="短缺数量" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="up" label="超存数量" show-overflow-tooltip></el-table-column>
+					<el-table-column prop="number" label="库存数量" show-overflow-tooltip></el-table-column>
 					<el-table-column prop="khhy" label="成本单价" show-overflow-tooltip></el-table-column>
 					<el-table-column prop="bh" label="成本金额" show-overflow-tooltip>
 					</el-table-column>
@@ -66,29 +71,11 @@
 				input: ref(''),
 				add: false,
 				activeName: "q",
-				tableData: [{
-					materialcode: '',
-					materialname: '',
-					khhy: '',
-					typename: '',
-					brand: '',
-					mll: '',
-					modelname: '',
-					sitepartname: '',
-					unitname: '',
-					backnumber: '',
-					unitprice: '',
-					amountprice: '',
-					khhy: '',
-					khhy: '',
-					khhy: '',
-					storename: '',
-					bh: ''
-				}],
 				value1: '',
 				value2: '',
 				dialogTableVisible: false,
 				dialogFormVisible: false,
+				tableData:[],
 				form: {
 					name: '',
 					region: '',
@@ -109,35 +96,24 @@
 					this.tableData.splice(row.id, 1);
 				}
 			},
-			handleAddDetails() {
-				if (this.tableData === undefined) {
-					this.tableData = new Array();
-				}
-				var obj = {};
-				obj.materialcode = '';
-				obj.materialcode = '';
-				obj.materialname = '';
-				obj.khhy = '';
-				obj.typename = '';
-				obj.brand = '';
-				obj.mll = '';
-				obj.modelname = '';
-				obj.sitepartname = '';
-				obj.unitname = '';
-				obj.backnumber = '';
-				obj.unitprice = '';
-				obj.amountprice = '';
-				obj.khhy = '';
-				obj.storename = '';
-				obj.bh = '';
-
-				this.tableData.push(obj);
+			init() {
+				this.axios.get("http://localhost:8081/asms/wMaterialorder/selectByWarning").then((res) => {
+						if (res.data.message === "success")
+							this.tableData = res.data.data
+						console.log(this.tableData)
+					})
+					.catch(function(error) {
+						console.log(error);
+					});
 			},
+		},
+		mounted() {
+			this.init();
 		}
 	};
 </script>
 
-<style>
+<style scoped>
 	.rightLabBox {
 		position: absolute;
 		right: 20px;
@@ -148,7 +124,7 @@
 			color: $green;
 			border-radius: 3px;
 			padding: 4px 10px;
-			font-size: 14px;
+			font-size: 10px;
 		}
 	}
 </style>

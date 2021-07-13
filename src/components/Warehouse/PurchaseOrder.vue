@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			<div>
-				<el-table :data="tableData" border style="width: 100%;text-align: center;">
+				<el-table :data="tableData" height="300"  border style="width: 100%;font-size: 13px;" empty-text="暂无数据">
 					<el-table-column type="index" label="序号" center width="50"></el-table-column>
 					<el-table-column prop="djh" label="操作" show-overflow-tooltip></el-table-column>
 					<el-table-column prop="kdrq" label="所属门店" show-overflow-tooltip></el-table-column>
@@ -95,7 +95,7 @@
 			</el-row>
 			<el-row style="margin-bottom: 20px;margin-top: 20px;">采购明细</el-row>
 			<div>
-				<el-table :data="tableData" :row-class-name="rowClassName" show-summary border style="width: 100%;text-align: center;">
+				<el-table :data="tableData"  border style="width: 100%;font-size: 13px;" empty-text="暂无数据">
 					<el-table-column type="index" label="序号" center width="50"></el-table-column>
 					<el-table-column label="操作">
 						<i class=" el-icon-circle-plus-outline" style="font-size: 24px; color: #1890ff;"
