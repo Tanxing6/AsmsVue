@@ -4,41 +4,44 @@
 		
 			<div>
 				&nbsp;
-				<h style="margin-left: 20px;">查询时间:</h>
-				<el-date-picker v-model="value2" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
-				 end-placeholder="结束日期" :shortcuts="shortcuts">
+				<h>查询时间:</h>
+				<el-date-picker size="mini" v-model="rq" type="daterange" align="right" unlink-panels
+					range-separator="至" @change="rqs()" start-placeholder="开始日期" end-placeholder="结束日期" :shortcuts="shortcuts">
 				</el-date-picker>
 				&nbsp;
 				<el-select v-model="value" placeholder="维修类型" id="select1">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					<el-option v-for="item in selectAll1" :key="item.value" v-model="value" :label="item.label" :value="item.value">
 					</el-option>
 				</el-select>
-				<el-select v-model="value" placeholder="维修顾问" id="select1">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+				<el-select v-model="value1" placeholder="维修顾问" id="select1">
+					<el-option v-for="item in selectAll2" :key="item.value" :label="item.value" :value="item.value">
 					</el-option>
 				</el-select>
-				<h style="margin-left: 10px;">联系人：</h>
-				<el-input v-model="input" placeholder="请输入联系人" style="width: 200px;"></el-input>&nbsp;&nbsp;
+				<h style="margin-left: 10px;">客户名称：</h>
+				<el-input v-model="input" placeholder="请输入客户名称" style="width: 200px;"></el-input>&nbsp;&nbsp;
 				<div style="display: inline-block;margin-left: 10px;">
-					<el-button icon="el-icon-search">查询</el-button>
+					<el-button @click="flcx" icon="el-icon-search">查询</el-button>
 				</div>
 			</div>
 			<div class="page">
 				
 			<el-tabs type="border-card" style="margin-top: 30px;">
-				
-				     <el-popover width="60" trigger="click" >
-				                 <el-checkbox-group v-model="columnSelecteds">
-				                     <el-checkbox v-for="item in columnHeaders" :label="item.title" :key="item.title" ></el-checkbox>    
-				                 </el-checkbox-group>
-								<el-button slot="reference" icon="el-icon-more" circle style="margin-left: 100px;"></el-button>
-					</el-popover>
+					<div style="overflow: hidden;">
+									 <el-checkbox-group v-model="columnSelecteds">
+										 <el-checkbox v-for="item in columnHeaders" :label="item.title" :key="item.title" ></el-checkbox>    
+									 </el-checkbox-group>
+									
+					</div>
 					 <el-table 
 					 :data="tableData1" 
 					 show-summary
 					 stripe border
-					 style="width: 100%"
+					 style="width: 100%;margin-top: 30px;"
 					 height="450">
+					 <el-table-column
+					       type="index"
+					       width="50">
+					     </el-table-column>
 						<el-table-column v-if="columnHeaders[0].isShow" prop="sname" label="所属门店" show-overflow-tooltip>
 						</el-table-column>
 						<el-table-column v-if="columnHeaders[1].isShow" prop="mainbilingno" label="单据编号" show-overflow-tooltip>
@@ -49,22 +52,22 @@
 						</el-table-column>
 						<el-table-column v-if="columnHeaders[4].isShow" prop="cname" label="客户名称" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column label="联系方式" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[5].isShow" label="联系方式" show-overflow-tooltip>
 							{{cphone}}
 						</el-table-column>
-						<el-table-column prop="chepai" label="车牌号" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[6].isShow" prop="chepai" label="车牌号" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="name" label="维修顾问" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[7].isShow" prop="name" label="维修顾问" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="coName" label="维修材料" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[8].isShow" prop="coName" label="维修材料" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="servicename" label="维修类型" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[9].isShow" prop="servicename" label="维修类型" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="settlementType" label="结账类型" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[10].isShow" prop="settlementType" label="结账类型" show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="mdTitle" label="数量" sortable show-overflow-tooltip>
+						<el-table-column prop="amout" label="数量" sortable show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="amout" label="单位" show-overflow-tooltip>
+						<el-table-column prop="mdTitle" label="单位" show-overflow-tooltip>
 						</el-table-column>
 						<el-table-column prop="coRetailprice" label="成本" show-overflow-tooltip>
 						</el-table-column>
@@ -74,13 +77,13 @@
 						</el-table-column>
 						<el-table-column prop="orderamount" label="收款金额"  show-overflow-tooltip>
 						</el-table-column>
-						<el-table-column prop="beizhu" label="备注" show-overflow-tooltip>
+						<el-table-column v-if="columnHeaders[11].isShow" prop="beizhu" label="备注" show-overflow-tooltip>
 						</el-table-column>			
 					</el-table>
 					
-					<div style="float: right; margin-top: 30px;">
-						<el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
-						 :page-size="10" layout="total,sizes, prev, pager, next, jumper" :total="2">
+					<div style="float: right;">
+						<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:currentPage="pageinfo.currentPage"
+						 :page-size="pageinfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageinfo.total">
 						</el-pagination>
 					</div>
 			</el-tabs>
@@ -93,20 +96,43 @@
     name: 'ElTableTest',
 		data() {
 			return {
+				input: '',
+				selectAll1:[{
+					key:0,
+					label:'一般维修',
+					value:'一般维修'
+				}],
+				selectAll2:[{
+					key:0,
+					label:'李世龙',
+					value:'李世龙'
+				}],
+				value:'',
+				value1:'',
+				selType:'',
+				rq: '',
 				cphone:'',
 				activeNames: ['1'],
 				activeName: 'second',
 				tableData1: [],
+				tableData2: [],
 				 //表头信息
 				            columnHeaders: [ 
 				                {index: 0, title: "所属门店", isShow: true},
 				                {index: 1, title: "单据编号", isShow: true},
 				                {index: 2, title: "单据日期", isShow: true},
 								{index: 3, title: "结算日期", isShow: true},
-								{index: 4, title: "客户名称", isShow: true}
+								{index: 4, title: "客户名称", isShow: true},
+								{index: 5, title: "联系方式", isShow: true},
+								{index: 6, title: "车牌号", isShow: true},
+								{index: 7, title: "维修顾问", isShow: true},
+								{index: 8, title: "维修材料", isShow: true},
+								{index: 9, title: "维修类型", isShow: true},
+								{index: 10, title: "结账类型", isShow: true},
+								{index: 11, title: "备注", isShow: true}
 				            ],  
 				            //已选择的项
-				            columnSelecteds: ["所属门店","单据编号", "单据日期", "结算日期", "客户名称"],
+				            columnSelecteds: ["所属门店","单据编号", "单据日期", "结算日期", "客户名称","联系方式","车牌号","维修顾问","维修材料","维修类型","结账类型","备注"],
 			
 				value1: '',
 				value2: '',
@@ -123,7 +149,36 @@
 					desc: ''
 				},
 				formLabelWidth: '120px',
-
+			pageinfo: {
+						currentPage: 1,
+						pageSize: 10,
+						total: 0
+					},
+					shortcuts: [{
+						text: '最近一周',
+						value: (() => {
+							const end = new Date()
+							const start = new Date()
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+							return [start, end]
+						})(),
+					}, {
+						text: '最近一个月',
+						value: (() => {
+							const end = new Date()
+							const start = new Date()
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+							return [start, end]
+						})(),
+					}, {
+						text: '最近三个月',
+						value: (() => {
+							const end = new Date()
+							const start = new Date()
+							start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+							return [start, end]
+						})(),
+					}],
 			}
 		},
 		 watch: {
@@ -159,6 +214,32 @@
 			handleChange(val) {
 				console.log(val);
 			},
+			handleCurrentChange(page) {
+				const token = JSON.parse(sessionStorage.getItem("state"));
+				const _this = this;
+				// var fd={
+				// 				  currentPage:_this.pageinfo.currentPage,
+				// 				  pageSize:_this.pageinfo.pageSize
+				// };
+				this.pageinfo.currentPage = page
+				this.axios.get('http://localhost:8081/asms/mainbilling/wxmxhz', {
+					params: _this.pageinfo,
+			
+				}).then(function(response) {
+					console.log(response.data)
+					_this.tableData1 = response.data.data.list;
+			
+					_this.pageinfo.total = response.data.data.total
+					console.log(_this.pageinfo.total)
+					for (var i = 0; i < _this.tableData1.length; i++) {
+						_this.tableData1[i].zcb = (_this.tableData1[i].invenTory * _this.tableData1[i].purchasePrice)
+					}
+			
+					console.log("ttt:", _this.tableData1)
+				}).catch(function(error) {
+					console.log(error) 
+				})
+				},
 			tableRowClassName({
 				row,
 				rowIndex
@@ -208,17 +289,80 @@
 			        });
 			        return sums;
 			      },
+				  flcx() {
+				  	const token = JSON.parse(sessionStorage.getItem("state"));
+				  	const _this = this
+				  	var pd = {
+				  		input: this.input,
+				  		currentPage: this.pageinfo.currentPage,
+				  		pageSize: this.pageinfo.pageSize
+				  	}
+				  	_this.axios({
+				  			url: "http://localhost:8081/asms/mainbilling/selectByname",
+				  			method: "get",
+				  			params: pd,
+				  			processData: false,
+				  
+				  		})
+				  		.then(function(response) {
+				  			console.log("currentPage:", response.data.data)
+				  			_this.tableData1 = response.data.data.list;
+				  			_this.pageinfo.total = response.data.data.total
+				  		})
+				  		.catch(function(error) {
+				  			console.log(error);
+				  		});
+				  },
+				  //根据选择的时间查询单据表
+				  rqs(){
+				  	if(this.rq != null || this.rq !=''){
+				  		const token = JSON.parse(sessionStorage.getItem('state'))
+				  		const _this = this;
+				  		var fy = {
+				  			currentPage: this.pageinfo.currentPage,
+				  			pageSize: this.pageinfo.pageSize,
+				  			data1:this.rq[0],
+				  			data2:this.rq[1]
+				  		}
+				  		_this.axios({
+				  			url: 'http://localhost:8081/asms/mainbilling/sjcx',
+				  			method: 'post',
+				  			data:fy,
+				  		}).then(function(response) {	
+				  			_this.tableData1.length=0
+				  			console.log("response",response)
+				  			_this.max1 = response.data.data.total;
+				  			_this.tableData1 = response.data.data.rows;
+				  			_this.num1 = _this.tableData2.length;
+				  			_this.$notify({
+				  			          title: '操作成功',
+				  			          message: '查询成功！',
+				  			          type: 'success'
+				  			});
+				  		}).catch(function(error) {
+				  			console.log(error)
+				  		})
+				  	}
+				  },
 				  pages() {
 				  		const token = JSON.parse(sessionStorage.getItem("state"));
 				  		const _this = this;
+				  		var fd = {
+				  			currentPage: _this.pageinfo.currentPage,
+				  			pageSize: _this.pageinfo.pageSize
+				  		};
 				  		_this.axios({
 				  				url: 'http://localhost:8081/asms/mainbilling/wxmxhz',
 				  				method: 'get',
+				  				params: fd,
 				  			})
 				  			.then(function(response) {
-				  				console.log("tableData1:", response.data.data)
-				  				_this.tableData1= response.data.data;
+				  				console.log("currentPage::", response.data.data)
+				  				_this.tableData1 = response.data.data.list;
+				  				_this.pageinfo.total = response.data.data.total
 								_this.cphone = _this.tableData1[0].cphone
+				  				console.log(_this.pageinfo.total)
+				  				console.log("ttt5:", _this.tableData1)
 				  			}).catch(function(error) {
 				  				console.log(error)
 				  			})

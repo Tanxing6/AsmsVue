@@ -3,13 +3,8 @@
 			<div style="text-align: center;margin-bottom: 10px; font-weight: 600;">材料领用汇总</div>
 			<div>
 				&nbsp;
-				<h>登记时间:</h>
-				<el-date-picker v-model="value2" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期"
-				 end-placeholder="结束日期" :shortcuts="shortcuts">
-				</el-date-picker>
-				&nbsp;
 				<el-select v-model="value" placeholder="维修顾问" id="select1">
-					<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+					<el-option v-for="item in options" :key="item.value" v-model="value"  :label="item.label" :value="item.value">
 					</el-option>
 				</el-select>
 				<el-input type="text" v-model="input" placeholder="请输物资名称" style="width: 200px;margin-left: 20px;"></el-input>
@@ -23,7 +18,10 @@
 			<el-tabs type="border-card" style="margin-top: 30px;">
 					<div style="border:1px solid #EBEEF5 ;">
 						<el-table ref="multipleTable" :data="tableData1" height="450" show-summary border tooltip-effect="dark" style="width: 100%;" @selection-change="handleSelectionChange">
-						
+						<el-table-column
+						      type="index"
+						      width="50">
+						    </el-table-column>
 							<el-table-column prop="coName" label="物资名称" show-overflow-tooltip>
 							</el-table-column>
 							<el-table-column prop="" label="物资编号" show-overflow-tooltip>
@@ -59,9 +57,17 @@
 	export default {
 		data() {
 			return {
+				options:[{
+					key:0,
+					label:'李世龙',
+					value:'李世龙'
+				}],
+				value:'',
 				coCode:'',
 				activeName: 'second',
-				tableData1: [],
+				tableData1: [
+					
+				],
 				shortcuts: [{
 					text: '最近一周',
 					value: (() => {
