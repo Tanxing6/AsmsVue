@@ -242,7 +242,7 @@
 			updateMainbilling(row) {
 				const _this = this
 				this.MainbillingFrom.mainbillingid = row.mainbillingid
-				this.axios.put("http://localhost:8081/asms/updateMainbilling", this.MainbillingFrom)
+				this.axios.put("http://localhost:8081/asms/mainbilling/updateMainbilling", this.MainbillingFrom)
 					.then(function(response) {
 						console.log("输出修改：" + response.data)
 						_this.axios.get("http://localhost:8081/asms/selectMainbilling")
@@ -259,7 +259,7 @@
 			addMainbillingzhuanweixiu() {
 				const _this = this
 				this.MainbillingFrom.maintenanceappid = 2
-				this.axios.post("http://localhost:8081/asms/insertMainbilling", this.MainbillingFrom)
+				this.axios.post("http://localhost:8081/asms/mainbilling/insertMainbilling", this.MainbillingFrom)
 					.then(function(response) {
 						console.log("添加成功")
 						console.log(response)
@@ -271,7 +271,7 @@
 			},
 			selectConter() {
 				const _this = this
-				this.axios.get("http://localhost:8081/asms/selectMainbilling")
+				this.axios.get("http://localhost:8081/asms/mainbilling/selectMainbilling")
 					.then(function(response) {
 						_this.mainbillingData = response.data
 						console.log(response)
@@ -370,7 +370,7 @@
 				}).catch(function(error) {
 					console.log(error)
 				}),
-				this.axios.get("http://localhost:8081/asms/selectMainbilling")
+				this.axios.get("http://localhost:8081/asms/mainbilling/selectMainbilling")
 				.then(function(response) {
 					_this.mainbillingData = response.data
 					console.log(response)

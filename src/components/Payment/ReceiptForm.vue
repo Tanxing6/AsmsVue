@@ -2,17 +2,27 @@
 	<p>收款单</p>
 	<div>
 		<div style="display: flex;margin-top: 20px;margin-bottom: 20px;">
-			<el-input placeholder="请输入内容" v-model="input" clearable>
+			<el-input placeholder="请输入单据号" v-model="pageInfo.documentnumber" clearable>
 			</el-input>
-			<el-select v-model="value" placeholder="请选择">
-				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+			<el-select v-model="pageInfo.sname" placeholder="请选择">
+				<el-option v-for="item in Store" :key="item.sid" :label="item.sname" :value="item.sname">
 				</el-option>
 			</el-select>
-			<el-select v-model="value" placeholder="请选择来源类型">
-				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+			<el-select v-model="pageInfo.documenttype" placeholder="请选择来源类型">
+				<el-option label="全部" value="">
+				</el-option>
+				<el-option label="维修美容单" value="维修美容单">
+				</el-option>
+				<el-option label="维修开单" value="维修开单">
+				</el-option>
+				<el-option label="洗车开单" value="洗车开单">
+				</el-option>
+				<el-option label="维修领料出库单" value="维修领料出库单">
+				</el-option>
+				<el-option label="储值卡充值" value="储值卡充值">
 				</el-option>
 			</el-select>
-			<el-button @click="">查询</el-button>
+			<el-button @click="findNameAndId">查询</el-button>
 		</div>
 		<el-table :data="tableData" border style="width: 100%">
 			<el-table-column type="index" label="序号">
@@ -55,8 +65,8 @@
 			<el-table-column prop="remarks" label="备注">
 			</el-table-column>
 		</el-table>
-<div class="block">
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+<div style="float: right;margin-top: 30px;">
+			<el-pagination  @size-change="handleSizeChange" @current-change="handleCurrentChange"
 				:current-page="pageInfo.currentPage" :page-sizes="[2, 3, 6, 10]" :page-size="pageInfo.pagesize"
 				layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.total">
 			</el-pagination>
@@ -74,6 +84,7 @@
 				pageInfo: {
 					documentnumber: '',
 					sname: '', //门店名称
+					documenttype:'',
 					currentPage: 1,
 					pagesize: 3,
 					total: 0
@@ -109,8 +120,8 @@
 					.then(function(response) {
 						// 数据接收
 						console.log(response)
-						_this.tableData = response.data.data.list
-						_this.pageInfo.total = response.data.data.total
+						_this.tableData = response.data.list
+						_this.pageInfo.total = response.data.total
 					}).catch(function(error) {
 						console.log(error)
 					})
@@ -130,7 +141,16 @@
 		},
 		created() {
 			const _this = this
-			this.findNameAndId()
+			this.findNameAndId(),
+			this.axios.get("http://localhost:8081/asms/store/selectAll")
+				.then(function(response) {
+					// 数据接收
+					console.log(response)
+					_this.Store = response.data
+					// _this.pageInfo.total = response.data.total
+				}).catch(function(error) {
+					console.log(error)
+				})
 	
 	
 	

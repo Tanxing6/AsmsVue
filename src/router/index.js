@@ -5,7 +5,6 @@ import { createRouter,createWebHashHistory,createWebHistory} from "vue-router"
 import Carwashorder from '../components/Billing/Carwashorder.vue'
 import Maintenanceapp from '../components/Billing/Maintenanceapp.vue'
 import Serviceorder from '../components/Billing/Serviceorder.vue'
-import Suppliessales from '../components/Billing/Suppliessales.vue'
 // 客户
 import Cheliang from '../components/kehu/Cheliang.vue'
 import Chuzhi from '../components/kehu/Chuzhi.vue'
@@ -51,7 +50,6 @@ const routes=[
 	{path:'/Carwashorder',component:Carwashorder},
 	{path:'/Maintenanceapp',component:Maintenanceapp},
 	{path:'/Serviceorder',component:Serviceorder},
-	{path:'/Suppliessales',component:Suppliessales},
 	// 客户
 	{path:'/Cheliang',component:Cheliang},
 	{path:'/Chuzhi',component:Chuzhi},
